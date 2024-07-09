@@ -8,6 +8,7 @@ const Display = () => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const usingFetch = useFetch();
+  const [someState, setSomeState] = useState("");
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["something here"],
@@ -33,7 +34,21 @@ const Display = () => {
       queryClient.invalidateQueries(["something here"]);
     },
   });
-  return <div>Hello</div>;
+  return (
+    <div>
+      {/* something here in jsx */}{" "}
+      {isSuccess &&
+        data.map((item) => {
+          return (
+            <SOMECOMPONENT
+              key={item._id}
+              id={item._id}
+              //   and something else
+            />
+          );
+        })}
+    </div>
+  );
 };
 
 export default Display;
