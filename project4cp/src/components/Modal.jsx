@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import styles from "../css/Modal.module.css";
 
 const OverLay = (props) => {
   const usingFetch = useFetch();
