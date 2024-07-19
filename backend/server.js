@@ -7,6 +7,7 @@ const rateLimit = require("express-rate-limit");
 const roles = require("./src/routers/roles");
 
 const connectToDB = require("./src/database");
+const app = express();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
