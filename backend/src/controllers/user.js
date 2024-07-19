@@ -44,4 +44,14 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUserByID, getAllUsers };
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error fetching user" });
+  }
+};
+
+module.exports = { createUser, updateUserByID, getAllUsers, getUserById };
