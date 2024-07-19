@@ -5,6 +5,6 @@ const { createUser } = require("../controllers/user");
 
 const { authBuyer, authGeneral, authSeller } = require("../middleware/auth");
 
-router.put("/newUser/:id", createUser);
+router.put("/newUser/:id", authGeneral, createUser);
 
 module.exports = router;
