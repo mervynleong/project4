@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const roles = require("./src/routers/roles");
 const auth = require("./src/routers/auth");
-const user = require("./src/routers")
+const user = require("./src/routers/user");
 
 const connectToDB = require("./src/database/database");
 const app = express();
@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/roles", roles);
 app.use("/auth", auth);
+app.use("/user", user);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
