@@ -20,4 +20,19 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const updateUserByID = async (req, res) => {
+  try {
+    const updateUser = {
+      username: req.body.username,
+      preferredLocation: req.body.preferredLocation,
+      interests: req.body.interests,
+    };
+    await User.findByIdAndUpdate(req.params.id, updateUser);
+    res.json({ status: "ok", msg: "User updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error updating user" });
+  }
+};
+
+module.exports = { createUser, updateUserByID };
