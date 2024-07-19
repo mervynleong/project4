@@ -34,4 +34,14 @@ const updateUserByID = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUserByID };
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find().populate("idLink", "username");
+    res.json(allUsers);
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error fetching users" });
+  }
+};
+
+module.exports = { createUser, updateUserByID, getAllUsers };
