@@ -8,7 +8,6 @@ const createUser = async (req, res) => {
       username: req.body.username,
       preferredLocation: req.body.preferredLocation,
       interests: req.body.interests,
-      rating: req.body.rating,
       idLink: user._id,
     };
     const newUserModel = new User(newUser);

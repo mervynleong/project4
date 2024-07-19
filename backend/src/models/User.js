@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema(
     username: { type: String, require: true },
     preferredLocation: { type: String },
     interests: { type: String },
-    rating: { type: Number, enum: [1, 2, 3, 4, 5] },
+    rating: { type: Number },
     idLink: { type: mongoose.Types.ObjectId, require: true, ref: "Auth" },
   },
   {
