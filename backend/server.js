@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const roles = require("./src/routers/roles");
 
 const connectToDB = require("./src/database");
 
