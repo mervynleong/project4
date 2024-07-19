@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const roles = require("./src/routers/roles");
 const auth = require("./src/routers/auth");
+const user = require("./src/routers")
 
 const connectToDB = require("./src/database/database");
 const app = express();
