@@ -4,7 +4,7 @@ const ProductSchema = new mongoose.Schema(
   {
     username: { type: String, require: true },
     itemName: { type: String, require: true },
-    decription: { type: String, require: true },
+    description: { type: String, require: true },
     condition: {
       type: String,
       require: true,
@@ -12,7 +12,7 @@ const ProductSchema = new mongoose.Schema(
     },
     category: { type: String, require: true },
     rating: { type: Number },
-    listedTime: {type: Date, default: Date.now},
+    listedTime: { type: Date, default: Date.now },
     userIDLink: { type: mongoose.Types.ObjectId, require: true, ref: "User" },
   },
   {

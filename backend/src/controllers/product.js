@@ -7,7 +7,7 @@ const createProduct = async (req, res) => {
     const newProduct = {
       itemName: req.body.itemName,
       description: req.body.description,
-      condition: req.body.contion,
+      condition: req.body.condition,
       category: req.body.category,
       username: user.username,
       userIDLink: user._id,
@@ -37,4 +37,14 @@ const updateProductByID = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, updateProductByID };
+const deleteProductByID = async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ status: "ok", msg: "Product deleted" });
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error deleting Product" });
+  }
+};
+
+module.exports = { createProduct, updateProductByID, deleteProductByID };
