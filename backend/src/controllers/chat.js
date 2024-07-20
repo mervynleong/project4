@@ -10,6 +10,7 @@ const createChat = async (req, res) => {
     });
     const newText = {
       textContent: req.body.textContent,
+      username: chatWUser.username,
       userIDLink: chatWUser._id,
       productIDLink: messageWProduct,
     };
