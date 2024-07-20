@@ -47,4 +47,19 @@ const deleteProductByID = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, updateProductByID, deleteProductByID };
+const getAllProducts = async (req, res) => {
+  try {
+    const allProducts = await Product.find().populate("userIDLink", "username");
+    res.json(allProducts);
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: error, msg: "error getting products" });
+  }
+};
+
+module.exports = {
+  createProduct,
+  updateProductByID,
+  deleteProductByID,
+  getAllProducts,
+};
