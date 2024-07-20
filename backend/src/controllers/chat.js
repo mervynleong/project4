@@ -22,4 +22,17 @@ const createChat = async (req, res) => {
   }
 };
 
-module.exports = { createChat };
+const updateChatByID = async (req, res) => {
+  try {
+    const chatUpdate = {
+      textContent: req.body.textContent,
+    };
+    await Chat.findByIdAndUpdate(req.params.id, chatUpdate);
+    res.json({ status: "ok", msg: "chat updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error updating chat" });
+  }
+};
+
+module.exports = { createChat, updateChatByID };
