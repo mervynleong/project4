@@ -54,4 +54,22 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUserByID, getAllUsers, getUserById };
+const getUserByIDLink = async (req, res) => {
+  const userInfo = {};
+  if (req.body?.idLink) userInfo.idLink = req.body.idLink;
+  try {
+    const user = await User.find(userInfo);
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.json({ status: "error", msg: "error fetching user Info" });
+  }
+};
+
+module.exports = {
+  createUser,
+  updateUserByID,
+  getAllUsers,
+  getUserById,
+  getUserByIDLink,
+};
