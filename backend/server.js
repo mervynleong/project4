@@ -8,6 +8,7 @@ const roles = require("./src/routers/roles");
 const auth = require("./src/routers/auth");
 const user = require("./src/routers/user");
 const product = require("./src/routers/product");
+const chat = require("./src/routers/chat");
 
 const connectToDB = require("./src/database/database");
 const app = express();
@@ -31,6 +32,7 @@ app.use("/roles", roles);
 app.use("/auth", auth);
 app.use("/user", user);
 app.use("/product", product);
+app.use("/chat", chat);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
