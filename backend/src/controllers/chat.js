@@ -35,4 +35,14 @@ const updateChatByID = async (req, res) => {
   }
 };
 
-module.exports = { createChat, updateChatByID };
+const getAllChatInProduct = async (req, res) => {
+  try {
+    const allChat = await Chat.find().populate("productIDLink");
+    res.json(allChat);
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "error fetching chat Content" });
+  }
+};
+
+module.exports = { createChat, updateChatByID, getAllChatInProduct };
