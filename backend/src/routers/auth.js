@@ -10,8 +10,6 @@ const {
 
 const { checkErrors } = require("../validators/checkErrors");
 
-const { authGeneral, authSeller } = require("../middleware/auth");
-
 router.put("/reg", checkErrors, validateReg, register);
 router.post("/login", validateLogin, checkErrors, login);
 router.post("/refresh", validateRefresh, checkErrors, refresh);
