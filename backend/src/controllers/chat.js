@@ -5,13 +5,13 @@ const User = require("../models/User");
 const createChat = async (req, res) => {
   try {
     const chatWUser = await User.findOne({ _id: req.params.id });
-    const messageInProduct = await Product.findOne({
-      _id: req.body.itemName,
+    const messageWProduct = await Product.findOne({
+      id: req.body.id,
     });
     const newText = {
       textContent: req.body.textContent,
       userIDLink: chatWUser._id,
-      productIDLink: messageInProduct,
+      productIDLink: messageWProduct,
     };
     await Chat.create(newText);
     res.json({ status: "ok", msg: "Text created" });
