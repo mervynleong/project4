@@ -7,7 +7,8 @@ const {
   validateRefresh,
 } = require("../validators/auth");
 
-const { registerPG, loginPG } = require("../controllers/auth");
+const { registerPG, loginPG, deleteAcc } = require("../controllers/auth");
+const { authAdmin } = require("../middleware/auth");
 
 const { checkErrors } = require("../validators/checkErrors");
 
@@ -16,5 +17,6 @@ const { checkErrors } = require("../validators/checkErrors");
 // router.post("/refresh", validateRefresh, checkErrors, refresh);
 router.put("/regPg", registerPG);
 router.post("/logPg", loginPG);
+router.delete("/delAcc", authAdmin, deleteAcc);
 
 module.exports = router;

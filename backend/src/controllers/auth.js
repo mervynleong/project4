@@ -165,6 +165,29 @@ const refreshPG = async (req, res) => {
   }
 };
 
+const deleteAcc = async (req, res) => {
+  const userEmail = req.body.email; // using email as a param
+  try {
+    // Check if user exists
+    const checkQuery = "SELECT * FROM personnel WHERE email = $1";
+    const { rows } = await pgquery.query(checkQuery, [userEmail]);
+    const user = rows[0];
+
+    if (!user) {
+      return res.status(404).json({ status: "error", msg: "email not found" });
+    }
+    // Delete user
+    const deleteQuery = "DELETE FROM personnel WHERE email = $1";
+    await pgquery.query(deleteQuery, [userEmail]);
+    res.json({ status: "ok", msg: "account deleted successfully" });
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "deleting of account failed" });
+  }
+};
+
 // module.exports = { register, login, refresh };
 
-module.exports = { registerPG, loginPG, refreshPG };
+module.exports = { registerPG, loginPG, refreshPG, deleteAcc };
