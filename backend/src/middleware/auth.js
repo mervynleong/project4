@@ -29,7 +29,7 @@ const authSeller = (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
 
-      if (decoded.role === "SELLER") {
+      if (decoded.type === "SELLER") {
         req.decoded = decoded;
         next();
       } else {
@@ -53,7 +53,7 @@ const authBuyer = (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
 
-      if (decoded.role === "BUYER") {
+      if (decoded.type === "BUYER") {
         req.decoded = decoded;
         next();
       } else {
@@ -77,7 +77,7 @@ const authAdmin = (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
 
-      if (decoded.role === "ADMIN") {
+      if (decoded.type === "ADMIN") {
         req.decoded = decoded;
         next();
       } else {
