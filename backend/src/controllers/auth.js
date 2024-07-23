@@ -148,6 +148,23 @@ const refresh = async (req, res) => {
   }
 };
 
+const refreshPG = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+    const claims = { email: decoded.email, type: decoded.type };
+
+    const refresh = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ refresh });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "refresh error" });
+  }
+};
+
 // module.exports = { register, login, refresh };
 
-module.exports = { registerPG, loginPG };
+module.exports = { registerPG, loginPG, refreshPG };
