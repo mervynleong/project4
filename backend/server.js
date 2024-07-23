@@ -10,7 +10,7 @@ const user = require("./src/routers/user");
 const product = require("./src/routers/product");
 const chat = require("./src/routers/chat");
 
-const connectToDB = require("./src/database/database");
+// const connectToDB = require("./src/database/database");
 const app = express();
 
 const limiter = rateLimit({
