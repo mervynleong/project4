@@ -4,24 +4,24 @@ const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const { pgquery } = require("../database/db");
 
-const register = async (req, res) => {
-  try {
-    const authentication = await Auth.findOne({ email: req.body.email });
-    if (authentication) {
-      return res.status(400).json({ status: "error", msg: "duplicate email" });
-    }
-    const hash = await bcrypt.hash(req.body.password, 12);
-    await Auth.create({
-      email: req.body.email,
-      hash,
-      role: req.body.role,
-    });
-    res.json({ status: "ok", msg: "buyer/seller account created" });
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", msg: "invalid registration" });
-  }
-};
+// const register = async (req, res) => {
+//   try {
+//     const authentication = await Auth.findOne({ email: req.body.email });
+//     if (authentication) {
+//       return res.status(400).json({ status: "error", msg: "duplicate email" });
+//     }
+//     const hash = await bcrypt.hash(req.body.password, 12);
+//     await Auth.create({
+//       email: req.body.email,
+//       hash,
+//       role: req.body.role,
+//     });
+//     res.json({ status: "ok", msg: "buyer/seller account created" });
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(400).json({ status: "error", msg: "invalid registration" });
+//   }
+// };
 
 const registerPG = async (req, res) => {
   try {
@@ -46,44 +46,44 @@ const registerPG = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
-  try {
-    const authentication = await Auth.findOne({ email: req.body.email });
-    if (!authentication) {
-      return res
-        .status(401)
-        .json({ status: "error", msg: "user is not authorised" });
-    }
-    const result = await bcrypt.compare(req.body.password, authentication.hash);
-    if (!result) {
-      console.log("email or password error");
-      return res.status(401).json({ status: "error", msg: "login failed" });
-    }
+// const login = async (req, res) => {
+//   try {
+//     const authentication = await Auth.findOne({ email: req.body.email });
+//     if (!authentication) {
+//       return res
+//         .status(401)
+//         .json({ status: "error", msg: "user is not authorised" });
+//     }
+//     const result = await bcrypt.compare(req.body.password, authentication.hash);
+//     if (!result) {
+//       console.log("email or password error");
+//       return res.status(401).json({ status: "error", msg: "login failed" });
+//     }
 
-    const claims = {
-      email: authentication.email,
-      role: authentication.role,
-    };
+//     const claims = {
+//       email: authentication.email,
+//       role: authentication.role,
+//     };
 
-    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
-      jwtid: uuidv4(),
-    });
+//     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+//       expiresIn: "20m",
+//       jwtid: uuidv4(),
+//     });
 
-    const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
-      expiresIn: "30d",
-      jwtid: uuidv4(),
-    });
+//     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+//       expiresIn: "30d",
+//       jwtid: uuidv4(),
+//     });
 
-    res.json({ access, refresh });
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({
-      status: "error",
-      msg: "login failed",
-    });
-  }
-};
+//     res.json({ access, refresh });
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(400).json({
+//       status: "error",
+//       msg: "login failed",
+//     });
+//   }
+// };
 
 const loginPG = async (req, res) => {
   try {
@@ -111,6 +111,7 @@ const loginPG = async (req, res) => {
     const claims = {
       email: authentication.email,
       type: authentication.type,
+      username: authentication.username,
     };
 
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
@@ -131,27 +132,31 @@ const loginPG = async (req, res) => {
   }
 };
 
-const refresh = async (req, res) => {
-  try {
-    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-    const claims = { email: decoded.email, role: decoded.role };
+// const refresh = async (req, res) => {
+//   try {
+//     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+//     const claims = { email: decoded.email, role: decoded.role };
 
-    const refresh = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
-      jwtid: uuidv4(),
-    });
+//     const refresh = jwt.sign(claims, process.env.ACCESS_SECRET, {
+//       expiresIn: "20m",
+//       jwtid: uuidv4(),
+//     });
 
-    res.json({ refresh });
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", msg: "refresh error" });
-  }
-};
+//     res.json({ refresh });
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(400).json({ status: "error", msg: "refresh error" });
+//   }
+// };
 
 const refreshPG = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-    const claims = { email: decoded.email, type: decoded.type };
+    const claims = {
+      email: decoded.email,
+      type: decoded.type,
+      username: decoded.username,
+    };
 
     const refresh = jwt.sign(claims, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
@@ -166,7 +171,7 @@ const refreshPG = async (req, res) => {
 };
 
 const deleteAcc = async (req, res) => {
-  const userEmail = req.body.email; // using email as a param
+  const userEmail = req.body.email; // using email as body
   try {
     // Check if user exists
     const checkQuery = "SELECT * FROM personnel WHERE email = $1";
