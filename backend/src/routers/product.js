@@ -9,7 +9,11 @@ const router = express.Router();
 //   createProductPG,
 // } = require("../controllers/product");
 
-const { createProductPG, buyItemPG } = require("../controllers/product");
+const {
+  createProductPG,
+  buyItemPG,
+  deleteItemPG,
+} = require("../controllers/product");
 
 const { authBuyer, authGeneral, authSeller } = require("../middleware/auth");
 
@@ -46,5 +50,6 @@ const { checkErrors } = require("../validators/checkErrors");
 
 router.put("/createNew/:params", authSeller, createProductPG);
 router.patch("/buyItem/:params", authBuyer, buyItemPG);
+router.delete("/del/:params", authSeller, deleteItemPG);
 
 module.exports = router;

@@ -89,6 +89,23 @@ const createProductPG = async (req, res) => {
   }
 };
 
+const deleteItemPG = async (req, res) => {
+  try {
+    const item_uuid = req.params.params;
+    // Check if item exists
+    const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
+    const { rows } = await pgquery.query(checkQuery, [item_uuid]);
+    if (rows[0].item_uuid === item_uuid) {
+      const deleteQuery = "DELETE FROM item WHERE item_uuid = $1";
+      await pgquery.query(deleteQuery, [item_uuid]);
+    }
+    res.json({ status: "ok", msg: "item listing deleted" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid deletion" });
+  }
+};
+
 const buyItemPG = async (req, res) => {
   try {
     const { buy_price, buyer_username } = req.body;
@@ -108,7 +125,7 @@ const buyItemPG = async (req, res) => {
     res.json({ status: "ok", msg: "item bought" });
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ status: "error", msg: "invalid creation" });
+    res.status(400).json({ status: "error", msg: "invalid update" });
   }
 };
 
@@ -121,4 +138,5 @@ const buyItemPG = async (req, res) => {
 module.exports = {
   createProductPG,
   buyItemPG,
+  deleteItemPG,
 };
