@@ -2,6 +2,7 @@ const Auth = require("../models/Auth");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const { pgquery } = require("../database/db");
 
 const register = async (req, res) => {
   try {
@@ -16,6 +17,26 @@ const register = async (req, res) => {
       role: req.body.role,
     });
     res.json({ status: "ok", msg: "buyer/seller account created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid registration" });
+  }
+};
+
+const registerPG = async (req, res) => {
+  try {
+    const { type, username, hash, email } = req.body;
+    // Check if email already exists
+    const checkQuery = "SELECT * FROM personnel WHERE email = $1";
+    const { rows } = await pgquery.query(checkQuery, [email]);
+    // row must not be more than 0 to prevent duplicate email
+    if (rows.length > 0) {
+      return res.status(400).json({ status: "error", msg: "duplicate email" });
+    }
+    // Insert new user
+    const insertQuery =
+      "INSERT INTO auth (type, username, hash, email) VALUES ($1, $2, $3, $4)";
+    await pgquery.query(insertQuery, [type, username, hash, email]);
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "invalid registration" });
@@ -78,4 +99,6 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = { register, login, refresh };
+// module.exports = { register, login, refresh };
+
+module.exports = { registerPG };
