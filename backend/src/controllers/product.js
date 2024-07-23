@@ -106,6 +106,33 @@ const deleteItemPG = async (req, res) => {
   }
 };
 
+const updateItemPG = async (req, res) => {
+  try {
+    const { description, sell_price, item_name, status } = req.body;
+    const item_uuid = req.params.params;
+    // Check if item exists
+    const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
+    const { rows } = await pgquery.query(checkQuery, [item_uuid]);
+
+    if (rows[0].item_uuid === item_uuid) {
+      // Insert new product
+      const updateQuery =
+        "UPDATE item SET description = $2, sell_price = $3, item_name = $4, status = $5 WHERE item_uuid = $1";
+      await pgquery.query(updateQuery, [
+        item_uuid,
+        description,
+        sell_price,
+        item_name,
+        status,
+      ]);
+    }
+    res.json({ status: "ok", msg: "listing updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid update" });
+  }
+};
+
 const buyItemPG = async (req, res) => {
   try {
     const { buy_price, buyer_username } = req.body;
@@ -119,8 +146,13 @@ const buyItemPG = async (req, res) => {
     if (rows[0].status === "AVAILABLE") {
       // Insert new product
       const updateQuery =
-        "UPDATE item SET buy_price = $1, status = $2, buyer_username = $3";
-      await pgquery.query(updateQuery, [buy_price, "SOLD", buyer_username]);
+        "UPDATE item SET buy_price = $1, status = $2, buyer_username = $3 WHERE item_uuid = $4";
+      await pgquery.query(updateQuery, [
+        buy_price,
+        "SOLD",
+        buyer_username,
+        item_uuid,
+      ]);
     }
     res.json({ status: "ok", msg: "item bought" });
   } catch (error) {
@@ -139,4 +171,5 @@ module.exports = {
   createProductPG,
   buyItemPG,
   deleteItemPG,
+  updateItemPG,
 };
