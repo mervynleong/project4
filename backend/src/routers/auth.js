@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { register, login, refresh } = require("../controllers/auth");
 
 const {
   validateReg,
@@ -8,7 +7,7 @@ const {
   validateRefresh,
 } = require("../validators/auth");
 
-const { registerPG } = require("../controllers/auth");
+const { registerPG, loginPG } = require("../controllers/auth");
 
 const { checkErrors } = require("../validators/checkErrors");
 
@@ -16,5 +15,6 @@ const { checkErrors } = require("../validators/checkErrors");
 // router.post("/login", validateLogin, checkErrors, login);
 // router.post("/refresh", validateRefresh, checkErrors, refresh);
 router.put("/regPg", registerPG);
+router.post("/logPg", loginPG);
 
 module.exports = router;

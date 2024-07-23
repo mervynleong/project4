@@ -85,6 +85,52 @@ const login = async (req, res) => {
   }
 };
 
+const loginPG = async (req, res) => {
+  try {
+    const { password, email } = req.body;
+    // Retrieve user by email
+    const checkQuery = "SELECT * FROM personnel WHERE email = $1";
+    const { rows } = await pgquery.query(checkQuery, [email]);
+    const authentication = rows[0];
+
+    // Check if user exists
+    if (!authentication) {
+      return res
+        .status(401)
+        .json({ status: "error", msg: "user is not authorised" });
+    }
+
+    // Compare passwords
+    const result = await bcrypt.compare(password, authentication.hash);
+    if (!result) {
+      console.log("email or password error");
+      return res.status(401).json({ status: "error", msg: "login failed" });
+    }
+
+    // Create JWT tokens
+    const claims = {
+      email: authentication.email,
+      type: authentication.type,
+    };
+
+    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: uuidv4(),
+    });
+
+    const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+      expiresIn: "30d",
+      jwtid: uuidv4(),
+    });
+
+    // Respond with tokens
+    res.json({ access, refresh });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "login failed" });
+  }
+};
+
 const refresh = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
@@ -104,4 +150,4 @@ const refresh = async (req, res) => {
 
 // module.exports = { register, login, refresh };
 
-module.exports = { registerPG };
+module.exports = { registerPG, loginPG };
