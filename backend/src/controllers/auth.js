@@ -25,7 +25,7 @@ const register = async (req, res) => {
 
 const registerPG = async (req, res) => {
   try {
-    const { type, username, hash, email } = req.body;
+    const { type, username, password, email } = req.body;
     // Check if email already exists
     const checkQuery = "SELECT * FROM personnel WHERE email = $1";
     const { rows } = await pgquery.query(checkQuery, [email]);
@@ -33,10 +33,13 @@ const registerPG = async (req, res) => {
     if (rows.length > 0) {
       return res.status(400).json({ status: "error", msg: "duplicate email" });
     }
+    // Hashing
+    const hash = await bcrypt.hash(password, 12);
     // Insert new user
     const insertQuery =
-      "INSERT INTO auth (type, username, hash, email) VALUES ($1, $2, $3, $4)";
+      "INSERT INTO personnel (type, username, hash, email) VALUES ($1, $2, $3, $4)";
     await pgquery.query(insertQuery, [type, username, hash, email]);
+    res.json({ status: "ok", msg: "buyer/seller account created" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "invalid registration" });

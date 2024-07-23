@@ -20,7 +20,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-connectToDB();
+// connectToDB();
 
 app.use(cors());
 app.use(helmet());
