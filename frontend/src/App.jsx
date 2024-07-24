@@ -15,14 +15,48 @@ function App() {
   const [showLogin, setShowLogin] = useState(true);
   const [type, setType] = useState("");
   const [username, setUsername] = useState("");
+  const [item_uuid, setItem_uuid] = useState("");
 
   return (
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider
-        value={{ accessToken, setAccessToken, type, setType }}
+        value={{
+          accessToken,
+          setAccessToken,
+          type,
+          setType,
+          username,
+          setUsername,
+        }}
       >
         {/* using accesstoken to set display if accesstoken is true it will display, basically needs login */}
-        <Navbar />
+        <NavBar username={username} />
+        <div className="bar">
+          <Routes>
+            <Route path="chat" element={<Chat />} />
+            {accessToken && (
+              <Route
+                path="chat/:item_uuid"
+                element={<Chat username={username} item_uuid={item_uuid} />}
+              />
+            )}
+
+            {!accessToken && showLogin && (
+              <Route
+                path="login"
+                element={
+                  <Login
+                    setShowLogin={setShowLogin}
+                    setAccessToken={setAccessToken}
+                  />
+                }
+              />
+            )}
+          </Routes>
+          {!accessToken && !showLogin && (
+            <Register setShowLogin={setShowLogin} />
+          )}
+        </div>
         {!accessToken && showLogin && <Login setShowLogin={setShowLogin} />}
         {!accessToken && !showLogin && <Register setShowLogin={setShowLogin} />}
         {accessToken && <Display />}
