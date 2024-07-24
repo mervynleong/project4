@@ -14,14 +14,11 @@ const NavBar = (props) => {
           <NavLink to="/Chat">CHAT</NavLink>
         </li>
         <li>
-          <div>
-            Profile
-            <div></div>
-          </div>
+          <NavLink to="/Profile">PROFILE</NavLink>
         </li>
         {!userCtx.accessToken && (
           <li>
-            <NavLink to="/Login">
+            <NavLink to="/Register">
               <div>
                 <h1>Login/Register</h1>
               </div>

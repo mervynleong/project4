@@ -39,7 +39,7 @@ function App() {
               />
             )}
             {!accessToken && !showLogin && (
-              <Route path="/Login" element={<Register />} />
+              <Route path="/Register" element={<Register />} />
             )}
           </Routes>
           {/* Display component when accessToken is present */}
