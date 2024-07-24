@@ -161,6 +161,20 @@ const buyItemPG = async (req, res) => {
   }
 };
 
+const getItemByIDPG = async (req, res) => {
+  try {
+    const item_uuid = req.params.params;
+    const getQuery = "SELECT * FROM item WHERE item_uuid = $1";
+    const result = await pgquery.query(getQuery, [item_uuid]);
+    const data = result.rows[0];
+    console.log(data);
+    res.json({ data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid request" });
+  }
+};
+
 // module.exports = {
 //   createProduct,
 //   updateProductByID,
@@ -172,4 +186,5 @@ module.exports = {
   buyItemPG,
   deleteItemPG,
   updateItemPG,
+  getItemByIDPG,
 };
