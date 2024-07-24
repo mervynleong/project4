@@ -1,15 +1,35 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
-import user from "../context/user";
+import UserContext from "../context/user";
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const [chatID, setChatID] = useState("");
+  const userCtx = useContext(UserContext);
 
   return (
-    <>
-
-    </>
+    <nav>
+      <ul>
+        <li>
+          <NavLink to="/Chat">CHAT</NavLink>
+        </li>
+        <li>
+          <div>
+            Profile
+            <div></div>
+          </div>
+        </li>
+        {!userCtx.accessToken && (
+          <li>
+            <NavLink to="/Login">
+              <div>
+                <h1>Login/Register</h1>
+              </div>
+            </NavLink>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 };
 

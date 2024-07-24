@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Route, Routes } from "react-router-dom";
 import UserContext from "./context/user";
 import Display from "./components/Display";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import Chat from "./components/Chat";
 import NavBar from "./components/NavBar";
 
 const queryClient = new QueryClient();
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(true); // Initially show login
   const [type, setType] = useState("");
   const [username, setUsername] = useState("");
-  const [item_uuid, setItem_uuid] = useState("");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,37 +28,23 @@ function App() {
           setUsername,
         }}
       >
-        {/* using accesstoken to set display if accesstoken is true it will display, basically needs login */}
-        <NavBar username={username} />
-        <div className="bar">
+        <NavBar>
           <Routes>
-            <Route path="chat" element={<Chat />} />
-            {accessToken && (
-              <Route
-                path="chat/:item_uuid"
-                element={<Chat username={username} item_uuid={item_uuid} />}
-              />
-            )}
-
+            <Route path="/Chat" element={<Chat />} />
+            {/* Conditional rendering based on accessToken and showLogin */}
             {!accessToken && showLogin && (
               <Route
-                path="login"
-                element={
-                  <Login
-                    setShowLogin={setShowLogin}
-                    setAccessToken={setAccessToken}
-                  />
-                }
+                path="/Login"
+                element={<Login setShowLogin={setShowLogin} />}
               />
             )}
+            {!accessToken && !showLogin && (
+              <Route path="/Login" element={<Register />} />
+            )}
           </Routes>
-          {!accessToken && !showLogin && (
-            <Register setShowLogin={setShowLogin} />
-          )}
-        </div>
-        {!accessToken && showLogin && <Login setShowLogin={setShowLogin} />}
-        {!accessToken && !showLogin && <Register setShowLogin={setShowLogin} />}
-        {accessToken && <Display />}
+          {/* Display component when accessToken is present */}
+          {accessToken && <Display />}
+        </NavBar>
       </UserContext.Provider>
     </QueryClientProvider>
   );
