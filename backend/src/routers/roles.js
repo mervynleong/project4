@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getTypes } = require("../controllers/roles");
+const { getTypes, seedTypes } = require("../controllers/roles");
 
 // router.get("/", getRoles);
 // router.get("/seed", seedRoles);
-router.get("/", getTypes);
+router.get("/types", getTypes);
+router.get("/seed", seedTypes);
 
 module.exports = router;

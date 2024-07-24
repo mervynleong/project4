@@ -25,7 +25,16 @@ const getTypes = async (req, res) => {
 
 const seedTypes = async (req, res) => {
   try {
-  } catch (error) {}
+    const deleteAllQuery = "DELETE FROM types";
+    await pgquery.query(deleteAllQuery);
+    const insertQuery = "INSERT INTO types (type) VALUES ($1, $2, $3)";
+    await pgquery.query(insertQuery, "ADMIN", "SELLER", "BUYER");
+
+    res.json({ status: "ok", msg: "seeded type data" });
+  } catch (error) {
+    console.error(error.message);
+    res.json({ status: "error", msg: "cannot seed types" });
+  }
 };
 
 // const seedRoles = async (req, res) => {
@@ -49,4 +58,4 @@ const seedTypes = async (req, res) => {
 // };
 
 // module.exports = { getRoles, seedRoles };
-module.exports = { getTypes };
+module.exports = { getTypes, seedTypes };
