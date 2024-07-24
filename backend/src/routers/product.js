@@ -15,6 +15,7 @@ const {
   deleteItemPG,
   updateItemPG,
   getItemByIDPG,
+  getAllItemPG,
 } = require("../controllers/product");
 
 const { authBuyer, authGeneral, authSeller } = require("../middleware/auth");
@@ -55,5 +56,6 @@ router.patch("/buyItem/:params", authBuyer, buyItemPG);
 router.delete("/del/:params", authSeller, deleteItemPG);
 router.patch("/updateItem/:params", authSeller, updateItemPG);
 router.get("/item/:params", authGeneral, getItemByIDPG);
+router.get("/all", authGeneral, getAllItemPG);
 
 module.exports = router;

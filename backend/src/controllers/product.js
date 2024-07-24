@@ -175,6 +175,18 @@ const getItemByIDPG = async (req, res) => {
   }
 };
 
+const getAllItemPG = async (req, res) => {
+  try {
+    const getAllQuery = "SELECT * FROM item";
+    const result = await pgquery.query(getAllQuery);
+    const data = result.rows;
+    res.json({ data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid request" });
+  }
+};
+
 // module.exports = {
 //   createProduct,
 //   updateProductByID,
@@ -187,4 +199,5 @@ module.exports = {
   deleteItemPG,
   updateItemPG,
   getItemByIDPG,
+  getAllItemPG,
 };
