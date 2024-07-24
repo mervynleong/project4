@@ -4,8 +4,30 @@ const User = require("../models/User");
 const { pgquery } = require("../database/db");
 
 const createChatPG = async (req, res) => {
-  
-}
+  try {
+    const { text_content } = req.body;
+    const from_who = req.params.buyer_username;
+    const to_who = req.params.seller_username;
+    const item_uuid = req.params.item_uuid;
+
+    // const selectQuery =
+    //   "SELECT * FROM personnel JOIN personnel_chat ON (personnel.username = personnel_chat.from_who AND personnel.username = personnel_chat.to_who) JOIN item ON personnel_chat.item_uuid = item.item_uuid WHERE item.uuid = $1 AND personnel_chat.from_who=item.buyer_username AND personnel_chat.to_who=item.seller_username";
+    // const { rows } = await pgquery.query(selectQuery, [item_uuid]);
+    // // Insert new chat
+    const insertQuery =
+      "INSERT INTO personnel_chat (text_content, from_who, to_who, item_uuid) VALUES ($1, $2, $3, $4, $5)";
+    await pgquery.query(insertQuery, [
+      text_content,
+      from_who,
+      to_who,
+      item_uuid,
+    ]);
+    res.json({ status: "ok", msg: "item listing created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid chat input" });
+  }
+};
 
 // const createChat = async (req, res) => {
 //   try {
