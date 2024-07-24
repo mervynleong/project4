@@ -28,23 +28,24 @@ function App() {
           setUsername,
         }}
       >
-        <NavBar>
-          <Routes>
-            <Route path="/Chat" element={<Chat />} />
-            {/* Conditional rendering based on accessToken and showLogin */}
-            {!accessToken && showLogin && (
+        <NavBar></NavBar>
+        <Routes>
+          <Route path="/Chat" element={<Chat />} />
+          {/* Conditional rendering based on accessToken and showLogin */}
+          {/* {!accessToken && showLogin && (
               <Route
                 path="/Login"
                 element={<Login setShowLogin={setShowLogin} />}
               />
-            )}
-            {!accessToken && !showLogin && (
+            )} */}
+
+          <Route path="/Register" element={<Register />} />
+          {/* {!accessToken && !showLogin && (
               <Route path="/Register" element={<Register />} />
-            )}
-          </Routes>
-          {/* Display component when accessToken is present */}
-          {accessToken && <Display />}
-        </NavBar>
+            )} */}
+        </Routes>
+        {/* Display component when accessToken is present */}
+        {accessToken && <Display />}
       </UserContext.Provider>
     </QueryClientProvider>
   );
