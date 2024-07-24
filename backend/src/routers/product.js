@@ -18,7 +18,12 @@ const {
   getAllItemPG,
 } = require("../controllers/product");
 
-const { authBuyer, authGeneral, authSeller } = require("../middleware/auth");
+const {
+  authBuyer,
+  authGeneral,
+  authSeller,
+  authAdminAndSeller,
+} = require("../middleware/auth");
 
 const { checkErrors } = require("../validators/checkErrors");
 // const {
@@ -53,7 +58,7 @@ const { checkErrors } = require("../validators/checkErrors");
 
 router.put("/createNew/:params", authSeller, createProductPG);
 router.patch("/buyItem/:params", authBuyer, buyItemPG);
-router.delete("/del/:params", authSeller, deleteItemPG);
+router.delete("/del/:params", authAdminAndSeller, deleteItemPG);
 router.patch("/updateItem/:params", authSeller, updateItemPG);
 router.get("/item/:params", authGeneral, getItemByIDPG);
 router.get("/all", authGeneral, getAllItemPG);
