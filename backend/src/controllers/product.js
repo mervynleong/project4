@@ -61,7 +61,7 @@ const { pgquery } = require("../database/db");
 const createProductPG = async (req, res) => {
   try {
     const { description, sell_price, item_name, status } = req.body;
-    const seller_username = req.params.params;
+    const seller_username = req.params.seller_username;
     // Check if username already exists
     const checkQuery = "SELECT * FROM personnel WHERE username = $1";
     const { rows } = await pgquery.query(checkQuery, [seller_username]);
@@ -91,7 +91,7 @@ const createProductPG = async (req, res) => {
 
 const deleteItemPG = async (req, res) => {
   try {
-    const item_uuid = req.params.params;
+    const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
     const { rows } = await pgquery.query(checkQuery, [item_uuid]);
@@ -109,7 +109,7 @@ const deleteItemPG = async (req, res) => {
 const updateItemPG = async (req, res) => {
   try {
     const { description, sell_price, item_name, status } = req.body;
-    const item_uuid = req.params.params;
+    const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
     const { rows } = await pgquery.query(checkQuery, [item_uuid]);
@@ -136,7 +136,7 @@ const updateItemPG = async (req, res) => {
 const buyItemPG = async (req, res) => {
   try {
     const { buy_price, buyer_username } = req.body;
-    const item_uuid = req.params.params;
+    const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
     const { rows } = await pgquery.query(checkQuery, [item_uuid]);
@@ -163,7 +163,7 @@ const buyItemPG = async (req, res) => {
 
 const getItemByIDPG = async (req, res) => {
   try {
-    const item_uuid = req.params.params;
+    const item_uuid = req.params.item_uuid;
     const getQuery = "SELECT * FROM item WHERE item_uuid = $1";
     const result = await pgquery.query(getQuery, [item_uuid]);
     const data = result.rows[0];

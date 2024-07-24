@@ -56,11 +56,11 @@ const { checkErrors } = require("../validators/checkErrors");
 // );
 // router.get("/allProducts", authGeneral, getAllProducts);
 
-router.put("/createNew/:params", authSeller, createProductPG);
-router.patch("/buyItem/:params", authBuyer, buyItemPG);
-router.delete("/del/:params", authAdminAndSeller, deleteItemPG);
-router.patch("/updateItem/:params", authSeller, updateItemPG);
-router.get("/item/:params", authGeneral, getItemByIDPG);
+router.put("/:seller_username", authSeller, createProductPG);
+router.patch("/buyItem/:item_uuid", authBuyer, buyItemPG);
+router.delete("/:item_uuid", authAdminAndSeller, deleteItemPG);
+router.patch("/updateItem/:item_uuid", authSeller, updateItemPG);
+router.get("/item/:item_uuid", authGeneral, getItemByIDPG);
 router.get("/all", authGeneral, getAllItemPG);
 
 module.exports = router;
