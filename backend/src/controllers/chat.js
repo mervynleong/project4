@@ -29,6 +29,8 @@ const createChatPG = async (req, res) => {
   }
 };
 
+module.exports = { createChatPG };
+
 // const createChat = async (req, res) => {
 //   try {
 //     const chatWUser = await User.findOne({ _id: req.params.id });

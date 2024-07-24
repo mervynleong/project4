@@ -13,7 +13,7 @@ const Register = (props) => {
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["reg"],
-    queryFn: async () => await usingFetch("/type"),
+    queryFn: async () => await usingFetch("/types"),
   });
 
   const { mutate } = useMutation({

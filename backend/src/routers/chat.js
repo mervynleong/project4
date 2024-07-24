@@ -11,20 +11,20 @@ const {
 const { validateChatData } = require("../validators/chat");
 const { checkErrors } = require("../validators/checkErrors");
 
-router.put(
-  "/newChat/:id",
-  validateChatData,
-  checkErrors,
-  authGeneral,
-  createChat
-);
-router.patch(
-  "/upChat/:id",
-  validateChatData,
-  checkErrors,
-  authGeneral,
-  updateChatByID
-);
-router.post("/allChat", authGeneral, getAllChatInProduct);
+// router.put(
+//   "/newChat/:id",
+//   validateChatData,
+//   checkErrors,
+//   authGeneral,
+//   createChat
+// );
+// router.patch(
+//   "/upChat/:id",
+//   validateChatData,
+//   checkErrors,
+//   authGeneral,
+//   updateChatByID
+// );
+// router.post("/allChat", authGeneral, getAllChatInProduct);
 
 module.exports = router;

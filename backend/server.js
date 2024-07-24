@@ -28,7 +28,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/roles", roles);
+app.use("/types", roles);
 app.use("/auth", auth);
 app.use("/user", user);
 app.use("/product", product);
