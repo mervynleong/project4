@@ -12,6 +12,7 @@ const {
   deleteChatPG,
   getChatwithItemId,
   createChatPGBuyer,
+  updateChatwithChatId,
 } = require("../controllers/chat");
 
 const { validateChatData, validateChatId } = require("../validators/chat");
@@ -40,6 +41,14 @@ router.get(
   checkErrors,
   authGeneral,
   getChatwithItemId
+);
+
+router.patch(
+  "/update/:chat_table_id",
+  validateChatData,
+  checkErrors,
+  authGeneral,
+  updateChatwithChatId
 );
 
 module.exports = router;

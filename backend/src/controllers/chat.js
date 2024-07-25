@@ -118,9 +118,39 @@ const getChatwithItemId = async (req, res) => {
   }
 };
 
+const updateChatwithChatId = async (req, res) => {
+  try {
+    const { text_content } = req.body;
+    const chat_table_id = req.params.chat_table_id;
+    // Check if chat exists
+    const checkQuery = "SELECT * FROM personnel_chat WHERE chat_table_id = $1";
+    const { rows } = await pgquery.query(checkQuery, [chat_table_id]);
+    console.log(rows);
+    if (rows[0].chat_table_id === chat_table_id) {
+      // Check if requested user is the exact user
+      const checkUserQuery =
+        "SELECT from_who FROM personnel_chat WHERE chat_table_id = $1";
+      const result = await pgquery.query(checkUserQuery, [chat_table_id]);
+      console.log(result.rows[0].from_who);
+      if (req.decoded.username === result.rows[0].from_who) {
+        const updateQuery =
+          "UPDATE personnel_chat SET text_content = $1 WHERE chat_table_id = $2";
+        await pgquery.query(updateQuery, [text_content, chat_table_id]);
+      } else {
+        res.json({ status: "error", msg: "You are not the original sender" });
+      }
+    }
+    res.json({ status: "ok", msg: "chat updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid update" });
+  }
+};
+
 module.exports = {
   createChatPGBuyer,
   replyChatPG,
   deleteChatPG,
   getChatwithItemId,
+  updateChatwithChatId,
 };
