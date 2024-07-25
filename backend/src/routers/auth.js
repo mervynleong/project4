@@ -5,6 +5,8 @@ const {
   validateReg,
   validateLogin,
   validateRefresh,
+  validateDeleteAcc,
+  validateUserDetails,
 } = require("../validators/auth");
 
 const {
@@ -17,9 +19,15 @@ const { authAdmin, authGeneral } = require("../middleware/auth");
 
 const { checkErrors } = require("../validators/checkErrors");
 
-router.put("/regPg", registerPG);
-router.post("/logPg", loginPG);
-router.delete("/delAcc", authAdmin, deleteAcc);
-router.patch("/update", authGeneral, updateAcc);
+router.put("/regPg", validateReg, checkErrors, registerPG);
+router.post("/logPg", validateLogin, checkErrors, loginPG);
+router.delete("/delAcc", validateDeleteAcc, checkErrors, authAdmin, deleteAcc);
+router.patch(
+  "/update",
+  validateUserDetails,
+  checkErrors,
+  authGeneral,
+  updateAcc
+);
 
 module.exports = router;
