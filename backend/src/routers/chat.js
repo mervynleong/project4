@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-const { authBuyer, authGeneral, authSeller } = require("../middleware/auth");
+const {
+  authBuyer,
+  authGeneral,
+  authSeller,
+  authAdmin,
+} = require("../middleware/auth");
 const {
   createChat,
   updateChatByID,
   getAllChatInProduct,
   replyChatPG,
+  deleteChatPG,
 } = require("../controllers/chat");
 
 const { validateChatData } = require("../validators/chat");
@@ -16,6 +22,7 @@ const { createChatPGBuyer } = require("../controllers/chat");
 
 router.put("/new/:item_uuid", authBuyer, createChatPGBuyer);
 router.put("/reply/:item_uuid", authGeneral, replyChatPG);
+router.delete("/delete/:chat_table_id", authAdmin, deleteChatPG);
 
 // router.put(
 //   "/newChat/:id",

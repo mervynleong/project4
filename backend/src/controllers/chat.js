@@ -29,6 +29,24 @@ const createChatPGBuyer = async (req, res) => {
   }
 };
 
+const deleteChatPG = async (req, res) => {
+  try {
+    const chat_table_id = req.params.chat_table_id;
+    // Check if item exists
+    const checkQuery = "SELECT * FROM personnel_chat WHERE chat_table_id = $1";
+    const { rows } = await pgquery.query(checkQuery, [chat_table_id]);
+    console.log(rows);
+    if (rows[0].chat_table_id === chat_table_id) {
+      const deleteQuery = "DELETE FROM personnel_chat WHERE chat_table_id = $1";
+      await pgquery.query(deleteQuery, [chat_table_id]);
+    }
+    res.json({ status: "ok", msg: "chat deleted" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid deletion" });
+  }
+};
+
 const replyChatPG = async (req, res) => {
   try {
     const { text_content } = req.body;
@@ -89,7 +107,7 @@ const replyChatPG = async (req, res) => {
   }
 };
 
-module.exports = { createChatPGBuyer, replyChatPG };
+module.exports = { createChatPGBuyer, replyChatPG, deleteChatPG };
 
 // const createChat = async (req, res) => {
 //   try {
