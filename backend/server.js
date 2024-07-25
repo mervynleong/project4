@@ -6,11 +6,9 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const roles = require("./src/routers/roles");
 const auth = require("./src/routers/auth");
-const user = require("./src/routers/user");
 const product = require("./src/routers/product");
 const chat = require("./src/routers/chat");
 
-// const connectToDB = require("./src/database/database");
 const app = express();
 
 const limiter = rateLimit({
@@ -20,8 +18,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// connectToDB();
-
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
@@ -30,7 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", roles);
 app.use("/auth", auth);
-app.use("/user", user);
 app.use("/product", product);
 app.use("/chat", chat);
 
