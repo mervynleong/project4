@@ -6,6 +6,7 @@ const {
   createChat,
   updateChatByID,
   getAllChatInProduct,
+  replyChatPG,
 } = require("../controllers/chat");
 
 const { validateChatData } = require("../validators/chat");
@@ -14,6 +15,7 @@ const { checkErrors } = require("../validators/checkErrors");
 const { createChatPGBuyer } = require("../controllers/chat");
 
 router.put("/new/:item_uuid", authBuyer, createChatPGBuyer);
+router.put("/reply/:item_uuid", authGeneral, replyChatPG);
 
 // router.put(
 //   "/newChat/:id",

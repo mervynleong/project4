@@ -29,7 +29,67 @@ const createChatPGBuyer = async (req, res) => {
   }
 };
 
-module.exports = { createChatPGBuyer };
+const replyChatPG = async (req, res) => {
+  try {
+    const { text_content } = req.body;
+    const from_who = req.decoded.username;
+    const item_uuid = req.params.item_uuid;
+
+    const selectFromQuery =
+      "SELECT from_who FROM personnel_chat WHERE item_uuid=$1";
+
+    const selectToQuery =
+      "SELECT to_who FROM personnel_chat WHERE item_uuid =$1";
+    // checking if there is an input in the rows first
+    const checkQuery = "SELECT * FROM personnel_chat WHERE item_uuid = $1";
+    const { rows } = await pgquery.query(checkQuery, [item_uuid]);
+    if (rows.length <= 0) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "no chat initiated by buyer yet" });
+    }
+    if (req.decoded.type === "SELLER") {
+      const data = await pgquery.query(selectFromQuery, [item_uuid]);
+      const to_who = data.rows[0].from_who;
+      if (from_who !== to_who) {
+        console.log(data.rows);
+        // this is kvp of {from_who: }
+        console.log(to_who);
+        // this the first kvp of {from_who: }
+
+        // Insert new chat
+        const insertQuery =
+          "INSERT INTO personnel_chat (text_content, from_who, to_who, item_uuid) VALUES ($1, $2, $3, $4)";
+        await pgquery.query(insertQuery, [
+          text_content,
+          from_who,
+          to_who,
+          item_uuid,
+        ]);
+      }
+    } else if (req.decoded.type === "BUYER") {
+      const data2 = await pgquery.query(selectToQuery, [item_uuid]);
+      const to_who2 = data2.rows[0].to_who;
+      console.log(to_who2);
+      if (from_who !== to_who2) {
+        const insertQuery2 =
+          "INSERT INTO personnel_chat (text_content, from_who, to_who, item_uuid) VALUES ($1, $2, $3, $4)";
+        await pgquery.query(insertQuery2, [
+          text_content,
+          from_who,
+          to_who2,
+          item_uuid,
+        ]);
+      }
+    }
+    res.json({ status: "ok", msg: "chat content created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid chat input" });
+  }
+};
+
+module.exports = { createChatPGBuyer, replyChatPG };
 
 // const createChat = async (req, res) => {
 //   try {
