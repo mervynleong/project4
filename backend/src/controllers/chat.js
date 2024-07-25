@@ -107,7 +107,26 @@ const replyChatPG = async (req, res) => {
   }
 };
 
-module.exports = { createChatPGBuyer, replyChatPG, deleteChatPG };
+const getChatwithItemId = async (req, res) => {
+  try {
+    const item_uuid = req.params.item_uuid;
+    const getAllQuery =
+      "SELECT * FROM personnel_chat WHERE item_uuid=$1 ORDER BY timestamp";
+    const result = await pgquery.query(getAllQuery, [item_uuid]);
+    const data = result.rows;
+    res.json({ data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid request" });
+  }
+};
+
+module.exports = {
+  createChatPGBuyer,
+  replyChatPG,
+  deleteChatPG,
+  getChatwithItemId,
+};
 
 // const createChat = async (req, res) => {
 //   try {

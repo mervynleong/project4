@@ -13,6 +13,7 @@ const {
   getAllChatInProduct,
   replyChatPG,
   deleteChatPG,
+  getChatwithItemId,
 } = require("../controllers/chat");
 
 const { validateChatData } = require("../validators/chat");
@@ -23,6 +24,7 @@ const { createChatPGBuyer } = require("../controllers/chat");
 router.put("/new/:item_uuid", authBuyer, createChatPGBuyer);
 router.put("/reply/:item_uuid", authGeneral, replyChatPG);
 router.delete("/delete/:chat_table_id", authAdmin, deleteChatPG);
+router.get("/all/:item_uuid", authGeneral, getChatwithItemId);
 
 // router.put(
 //   "/newChat/:id",
