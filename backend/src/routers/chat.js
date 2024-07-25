@@ -11,6 +11,10 @@ const {
 const { validateChatData } = require("../validators/chat");
 const { checkErrors } = require("../validators/checkErrors");
 
+const { createChatPGBuyer } = require("../controllers/chat");
+
+router.put("/new/:item_uuid", authBuyer, createChatPGBuyer);
+
 // router.put(
 //   "/newChat/:id",
 //   validateChatData,

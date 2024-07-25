@@ -3,33 +3,33 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 const { pgquery } = require("../database/db");
 
-const createChatPG = async (req, res) => {
+const createChatPGBuyer = async (req, res) => {
   try {
     const { text_content } = req.body;
-    const from_who = req.params.buyer_username;
-    const to_who = req.params.seller_username;
+    const from_who = req.decoded.username;
     const item_uuid = req.params.item_uuid;
 
-    // const selectQuery =
-    //   "SELECT * FROM personnel JOIN personnel_chat ON (personnel.username = personnel_chat.from_who AND personnel.username = personnel_chat.to_who) JOIN item ON personnel_chat.item_uuid = item.item_uuid WHERE item.uuid = $1 AND personnel_chat.from_who=item.buyer_username AND personnel_chat.to_who=item.seller_username";
-    // const { rows } = await pgquery.query(selectQuery, [item_uuid]);
-    // // Insert new chat
+    const selectSellerQuery =
+      "SELECT seller_username FROM item WHERE item_uuid= $1";
+    const data = await pgquery.query(selectSellerQuery, [item_uuid]);
+    // to access the sellerusername: data.rows[0].seller_username
+    // Insert new chat
     const insertQuery =
-      "INSERT INTO personnel_chat (text_content, from_who, to_who, item_uuid) VALUES ($1, $2, $3, $4, $5)";
+      "INSERT INTO personnel_chat (text_content, from_who, to_who, item_uuid) VALUES ($1, $2, $3, $4)";
     await pgquery.query(insertQuery, [
       text_content,
       from_who,
-      to_who,
+      data.rows[0].seller_username,
       item_uuid,
     ]);
-    res.json({ status: "ok", msg: "item listing created" });
+    res.json({ status: "ok", msg: "chat content created" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "invalid chat input" });
   }
 };
 
-module.exports = { createChatPG };
+module.exports = { createChatPGBuyer };
 
 // const createChat = async (req, res) => {
 //   try {
