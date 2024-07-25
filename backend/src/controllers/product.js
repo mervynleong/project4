@@ -61,10 +61,10 @@ const { pgquery } = require("../database/db");
 const createProductPG = async (req, res) => {
   try {
     const { description, sell_price, item_name, status } = req.body;
-    const seller_username = req.params.seller_username;
+    // const seller_username = req.params.seller_username;
     // Check if username already exists
     const checkQuery = "SELECT * FROM personnel WHERE username = $1";
-    const { rows } = await pgquery.query(checkQuery, [seller_username]);
+    const { rows } = await pgquery.query(checkQuery, [req.decoded.username]);
     console.log(rows);
     // row length must exact to 1
     if (rows.length !== 1) {
@@ -80,7 +80,7 @@ const createProductPG = async (req, res) => {
       sell_price,
       item_name,
       status,
-      seller_username,
+      req.decoded.username,
     ]);
     res.json({ status: "ok", msg: "item listing created" });
   } catch (error) {

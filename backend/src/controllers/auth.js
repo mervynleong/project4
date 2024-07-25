@@ -202,6 +202,7 @@ const updateAcc = async (req, res) => {
     await pgquery.query(updateQuery, [
       preferred_location,
       interest,
+      // taking in the decoded from middleware
       req.decoded.username,
     ]);
     res.json({ status: "ok", msg: "account info updated successfully" });

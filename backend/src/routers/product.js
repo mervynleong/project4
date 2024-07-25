@@ -56,7 +56,7 @@ const { checkErrors } = require("../validators/checkErrors");
 // );
 // router.get("/allProducts", authGeneral, getAllProducts);
 
-router.put("/:seller_username", authSeller, createProductPG);
+router.put("/new", authSeller, createProductPG);
 router.patch("/buyItem/:item_uuid", authBuyer, buyItemPG);
 router.delete("/:item_uuid", authAdminAndSeller, deleteItemPG);
 router.patch("/updateItem/:item_uuid", authSeller, updateItemPG);
