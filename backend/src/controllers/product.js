@@ -61,7 +61,6 @@ const { pgquery } = require("../database/db");
 const createProductPG = async (req, res) => {
   try {
     const { description, sell_price, item_name, status } = req.body;
-    // const seller_username = req.params.seller_username;
     // Check if username already exists
     const checkQuery = "SELECT * FROM personnel WHERE username = $1";
     const { rows } = await pgquery.query(checkQuery, [req.decoded.username]);
@@ -135,7 +134,7 @@ const updateItemPG = async (req, res) => {
 
 const buyItemPG = async (req, res) => {
   try {
-    const { buy_price, buyer_username } = req.body;
+    const { buy_price } = req.body;
     const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
@@ -150,7 +149,7 @@ const buyItemPG = async (req, res) => {
       await pgquery.query(updateQuery, [
         buy_price,
         "SOLD",
-        buyer_username,
+        req.decoded.username,
         item_uuid,
       ]);
     }

@@ -195,7 +195,6 @@ const deleteAcc = async (req, res) => {
 
 const updateAcc = async (req, res) => {
   try {
-    // const username = req.params.username;
     const { preferred_location, interest } = req.body;
     const updateQuery =
       "UPDATE personnel SET preferred_location=$1, interest=$2 where username=$3";
