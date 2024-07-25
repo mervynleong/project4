@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Chat from "./components/Chat";
 import NavBar from "./components/NavBar";
+import Profile from "./components/Profile";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,10 @@ function App() {
       >
         <NavBar></NavBar>
         <Routes>
-          <Route path="/Chat" element={<Chat />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/profile" element={<Profile />} />
           {/* Conditional rendering based on accessToken and showLogin */}
           {/* {!accessToken && showLogin && (
               <Route
@@ -39,7 +43,6 @@ function App() {
               />
             )} */}
 
-          <Route path="/Register" element={<Register />} />
           {/* {!accessToken && !showLogin && (
               <Route path="/Register" element={<Register />} />
             )} */}

@@ -193,6 +193,24 @@ const deleteAcc = async (req, res) => {
   }
 };
 
+const updateAcc = async (req, res) => {
+  try {
+    // const username = req.params.username;
+    const { preferred_location, interest } = req.body;
+    const updateQuery =
+      "UPDATE personnel SET preferred_location=$1, interest=$2 where username=$3";
+    await pgquery.query(updateQuery, [
+      preferred_location,
+      interest,
+      req.decoded.username,
+    ]);
+    res.json({ status: "ok", msg: "account info updated successfully" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "editing of account failed" });
+  }
+};
+
 // module.exports = { register, login, refresh };
 
-module.exports = { registerPG, loginPG, refreshPG, deleteAcc };
+module.exports = { registerPG, loginPG, refreshPG, deleteAcc, updateAcc };
