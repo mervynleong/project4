@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Route, Routes } from "react-router-dom";
 import UserContext from "./context/user";
-import Display from "./components/Display";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Chat from "./components/Chat";
@@ -29,26 +28,14 @@ function App() {
           setUsername,
         }}
       >
-        <NavBar></NavBar>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
-          {/* Conditional rendering based on accessToken and showLogin */}
-          {/* {!accessToken && showLogin && (
-              <Route
-                path="/Login"
-                element={<Login setShowLogin={setShowLogin} />}
-              />
-            )} */}
-
-          {/* {!accessToken && !showLogin && (
-              <Route path="/Register" element={<Register />} />
-            )} */}
         </Routes>
         {/* Display component when accessToken is present */}
-        {accessToken && <Display />}
+        {accessToken && <NavBar></NavBar>}
+        {!accessToken && showLogin && <Login setShowLogin={setShowLogin} />}
+        {!accessToken && !showLogin && <Register setShowLogin={setShowLogin} />}
       </UserContext.Provider>
     </QueryClientProvider>
   );

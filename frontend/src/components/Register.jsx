@@ -34,11 +34,11 @@ const Register = (props) => {
         <div className="col-sm-1"></div>
         <input
           style={{
-            padding: "10px",
-            borderRadius: "25px",
-            gap: "2px",
-            backgroundColor: "teal",
-            color: "white",
+            padding: "5px",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
+            color: "black",
           }}
           type="text"
           className="col-sm-3"
@@ -56,10 +56,10 @@ const Register = (props) => {
         <input
           style={{
             padding: "5px",
-            borderRadius: "30px",
-            gap: "2px",
-            backgroundColor: "teal",
-            color: "white",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
+            color: "black",
           }}
           type="text"
           className="col-sm-3"
@@ -77,10 +77,10 @@ const Register = (props) => {
         <input
           style={{
             padding: "5px",
-            borderRadius: "30px",
-            gap: "2px",
-            backgroundColor: "green",
-            color: "white",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
+            color: "black",
           }}
           type="text"
           className="col-sm-3"
@@ -98,10 +98,10 @@ const Register = (props) => {
         <input
           style={{
             padding: "5px",
-            borderRadius: "30px",
-            gap: "2px",
-            backgroundColor: "blue",
-            color: "white",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
+            color: "black",
           }}
           type="text"
           className="col-sm-3"
@@ -119,9 +119,9 @@ const Register = (props) => {
         <select
           style={{
             padding: "5px",
-            borderRadius: "30px",
-            gap: "2px",
-            backgroundColor: "cyan",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
             color: "black",
           }}
           name="type"
@@ -132,7 +132,7 @@ const Register = (props) => {
         >
           <option value="none">Select Type</option>
           {data &&
-            data.map((item) => {
+            data.x.map((item) => {
               return (
                 <option key={item} value={item}>
                   {item}
@@ -148,10 +148,10 @@ const Register = (props) => {
         {password === confirmPW ? (
           <button
             style={{
-              padding: "10px",
-              borderRadius: "35px",
-              gap: "3px",
-              backgroundColor: "red",
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "#90EE90",
               color: "black",
             }}
             className="col-sm-3"
@@ -163,7 +163,16 @@ const Register = (props) => {
             Register
           </button>
         ) : (
-          <div style={{ color: "yellow" }} className="col-sm-3">
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "#FF474C",
+              color: "black",
+            }}
+            className="col-sm-3"
+          >
             Passwords do not match!
           </div>
         )}
@@ -175,9 +184,9 @@ const Register = (props) => {
         <button
           style={{
             padding: "5px",
-            borderRadius: "30px",
-            gap: "3px",
-            backgroundColor: "blue",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "#90EE90",
             color: "black",
           }}
           className="col-sm-3"

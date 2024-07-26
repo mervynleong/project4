@@ -5,7 +5,8 @@ const getTypes = async (req, res) => {
     const getAllQuery = "SELECT * FROM types";
     const result = await pgquery.query(getAllQuery);
     const data = result.rows;
-    res.json({ data });
+    const x = data.map((i) => i.type);
+    res.json({ x });
   } catch (error) {
     console.error(error.message);
     res.json({ status: "error", msg: "cannot get types" });
