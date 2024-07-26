@@ -37,8 +37,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="text"
           className="col-sm-3"
@@ -58,8 +58,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="text"
           className="col-sm-3"
@@ -79,8 +79,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="text"
           className="col-sm-3"
@@ -100,8 +100,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="text"
           className="col-sm-3"
@@ -121,8 +121,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           name="type"
           id="types"
@@ -151,8 +151,8 @@ const Register = (props) => {
               padding: "5px",
               borderRadius: "15px",
               gap: "1px",
-              backgroundColor: "#90EE90",
-              color: "black",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
             }}
             className="col-sm-3"
             onClick={() => {
@@ -169,7 +169,7 @@ const Register = (props) => {
               borderRadius: "15px",
               gap: "1px",
               backgroundColor: "#FF474C",
-              color: "black",
+              color: "white",
             }}
             className="col-sm-3"
           >
@@ -186,8 +186,8 @@ const Register = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           className="col-sm-3"
           onClick={() => props.setShowLogin(true)}

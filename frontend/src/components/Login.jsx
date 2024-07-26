@@ -42,8 +42,8 @@ const Login = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="text"
           className="col-md-4"
@@ -61,8 +61,8 @@ const Login = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           type="password"
           className="col-md-4"
@@ -80,8 +80,8 @@ const Login = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           className="col-md-4"
           onClick={refetch}
@@ -98,8 +98,8 @@ const Login = (props) => {
             padding: "5px",
             borderRadius: "15px",
             gap: "1px",
-            backgroundColor: "#90EE90",
-            color: "black",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
           }}
           className="col-md-4"
           onClick={() => props.setShowLogin(false)}

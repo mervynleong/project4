@@ -1,0 +1,21 @@
+.container {
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  background-color: rgb(49, 238, 49); 
+  padding: 10px; 
+  box-sizing: border-box; 
+  width: 100%; 
+}
+
+img {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(49, 238, 49);
+}
+
+h1 {
+  color: black;
+  background-color: rgb(49, 238, 49);
+  margin: 0;
+}
