@@ -143,7 +143,7 @@ const getAllInfo = async (req, res) => {
     const result = await pgquery.query(selectQuery, [relatedData]);
     const data = result.rows;
     const x = data.map((i) => i);
-    console.log(data);
+    console.log(x); 
     res.json({ x });
   } catch (error) {
     console.error(error.message);

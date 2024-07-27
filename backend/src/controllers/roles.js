@@ -6,6 +6,7 @@ const getTypes = async (req, res) => {
     const result = await pgquery.query(getAllQuery);
     const data = result.rows;
     const x = data.map((i) => i.type);
+    console.log(x);
     res.json({ x });
   } catch (error) {
     console.error(error.message);

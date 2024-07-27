@@ -1,18 +1,12 @@
 import React from "react";
 import UserContext from "../context/user";
-import {
-  useState,
-  useContext,
-  useEffect,
-  useMutation,
-  useQueryClient,
-} from "react";
+import { useState, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "./Modal";
 
-// const queryClient = useQueryClient();
 const Profile = () => {
+  const queryClient = useQueryClient();
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [preferred_location, setPreferred_location] = useState("");
@@ -21,9 +15,13 @@ const Profile = () => {
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["auth"],
-    queryFn: async () => await usingFetch("/auth/getUser", userCtx.accessToken),
+    queryFn: async () =>
+      await usingFetch("/auth/getUser", "GET", undefined, userCtx.accessToken),
     onSuccess: () => {
-      // queryClient.invalidateQueries(["auth"]);
+      queryClient.invalidateQueries(["auth"]);
+      setInterest("");
+      setPreferred_location("");
+      console.log(data.x);
     },
   });
 
