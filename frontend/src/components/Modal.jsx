@@ -36,8 +36,15 @@ const OverLay = (props) => {
       <div className={styles.modal}>
         <div className="row">
           <div className="col-md-3"></div>
-          <div className="col-md-3">Interest</div>
+          <div  className="col-md-3">Interest</div>
           <input
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+            }}
             type="text"
             className="col-md-3"
             value={interest}
@@ -49,6 +56,13 @@ const OverLay = (props) => {
           <div className="col-md-3"></div>
           <div className="col-md-3">Preferred Location</div>
           <input
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+            }}
             type="text"
             className="col-md-3"
             value={preferred_location}
@@ -59,10 +73,27 @@ const OverLay = (props) => {
 
         <div className="row">
           <div className="col-md-3"></div>
-          <button className="col-md-3" onClick={mutate}>
+          <button
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+            }}
+            className="col-md-3"
+            onClick={mutate}
+          >
             Update Info
           </button>
           <button
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+            }}
             className="col-md-3"
             onClick={() => props.setShowModal(false)}
           >

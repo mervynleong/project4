@@ -11,13 +11,12 @@
 .modal {
   position: fixed;
   background: black;
-  color: white;
+  color: rgb(49, 238, 49);
   top: 30vh;
   bottom: 30vh;
   left: 10%;
   width: 80%;
   z-index: 100;
   padding: 40px;
-  border-radius: 15%;
   overflow: scroll;
 }

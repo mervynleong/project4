@@ -11,6 +11,7 @@ const Login = (props) => {
   const userCtx = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { isError, error, data, refetch } = useQuery({
     queryKey: ["login"],
@@ -33,80 +34,109 @@ const Login = (props) => {
     }
   }, [data]);
 
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <br />
       <div className="row">
         <div className="col-md-4"></div>
-        <input
-          style={{
-            padding: "5px",
-            borderRadius: "15px",
-            gap: "1px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          type="text"
-          className="col-md-4"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
+        <div className="col-md-4 position-relative">
+          <input
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              width: "100%",
+            }}
+            type="text"
+            className="col-md-4"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </div>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
-        <input
-          style={{
-            padding: "5px",
-            borderRadius: "15px",
-            gap: "1px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          type="password"
-          className="col-md-4"
-          placeholder="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        <div className="col-md-4 position-relative">
+          <input
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              width: "100%",
+            }}
+            type={showPassword ? "text" : "password"}
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            onClick={togglePassword}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "transparent",
+              border: "none",
+              color: "rgb(49, 238, 49)",
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? "👁️" : "🙈"}
+          </button>
+        </div>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
-        <button
-          style={{
-            padding: "5px",
-            borderRadius: "15px",
-            gap: "1px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          className="col-md-4"
-          onClick={refetch}
-        >
-          Login
-        </button>
+        <div className="col-md-4 position-relative">
+          <button
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              width: "100%",
+            }}
+            className="col-md-4"
+            onClick={refetch}
+          >
+            Login
+          </button>
+        </div>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
-        <button
-          style={{
-            padding: "5px",
-            borderRadius: "15px",
-            gap: "1px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          className="col-md-4"
-          onClick={() => props.setShowLogin(false)}
-        >
-          Register
-        </button>
+        <div className="col-md-4 position-relative">
+          <button
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              width: "100%",
+            }}
+            className="col-md-4"
+            onClick={() => props.setShowLogin(false)}
+          >
+            Register
+          </button>
+        </div>
         <div className="col-md-4"></div>
       </div>
     </>
