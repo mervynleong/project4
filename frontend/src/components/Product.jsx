@@ -8,7 +8,7 @@ const Product = () => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const usingFetch = useFetch();
-  const [someState, setSomeState] = useState("");
+  const [productModal, setProductModal] = useState(false);
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["something here"],
