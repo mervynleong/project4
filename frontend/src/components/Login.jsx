@@ -92,7 +92,7 @@ const Login = (props) => {
               cursor: "pointer",
             }}
           >
-            {showPassword ? "👁️" : "🙈"}
+            {showPassword ? "🙈" : "🙉"}
           </button>
         </div>
         <div className="col-md-4"></div>
