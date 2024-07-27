@@ -14,6 +14,7 @@ const {
   loginPG,
   deleteAcc,
   updateAcc,
+  getAllInfo,
 } = require("../controllers/auth");
 const { authAdmin, authGeneral } = require("../middleware/auth");
 
@@ -29,5 +30,7 @@ router.patch(
   authGeneral,
   updateAcc
 );
+
+router.get("/getUser", authGeneral, getAllInfo);
 
 module.exports = router;

@@ -135,4 +135,29 @@ const updateAcc = async (req, res) => {
   }
 };
 
-module.exports = { registerPG, loginPG, refreshPG, deleteAcc, updateAcc };
+const getAllInfo = async (req, res) => {
+  const relatedData = req.decoded.username;
+  try {
+    const selectQuery =
+      "SELECT type, interest, preferred_location, username FROM personnel where username=$1";
+    const result = await pgquery.query(selectQuery, [relatedData]);
+    const data = result.rows;
+    const x = data.map((i) => i);
+    console.log(data);
+    res.json({ x });
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "getting info ccount failed" });
+  }
+};
+
+module.exports = {
+  registerPG,
+  loginPG,
+  refreshPG,
+  deleteAcc,
+  updateAcc,
+  getAllInfo,
+};
