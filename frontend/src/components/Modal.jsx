@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -10,19 +9,24 @@ const OverLay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
+  const [preferred_location, setPreferred_location] = useState(
+    props.preferred_location
+  );
+  const [interest, setInterest] = useState(props.interest);
 
-  const { mutate: someFunction } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async () =>
       await usingFetch(
-        "endpoint here" + props.id, // if needed
-        "method here",
+        "/auth/update",
+        "PATCH",
         {
-          // body here
+          interest,
+          preferred_location,
         },
-        userCtx.accessToken // if needed
+        userCtx.accessToken
       ),
     onSuccess: () => {
-      queryClient.invalidateQueries(["something"]);
+      queryClient.invalidateQueries(["auth"]);
       props.setShowModal(false);
     },
   });
@@ -30,24 +34,33 @@ const OverLay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <br />
-        <br />
         <div className="row">
           <div className="col-md-3"></div>
-          <div className="col-md-3">Title</div>
+          <div className="col-md-3">Interest</div>
           <input
             type="text"
             className="col-md-3"
-            value={something}
-            onChange={(event) => setSomething(event.target.value)}
+            value={interest}
+            onChange={(event) => setInterest(event.target.value)}
+          />
+          <div className="col-md-3"></div>
+        </div>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-3">Preferred Location</div>
+          <input
+            type="text"
+            className="col-md-3"
+            value={preferred_location}
+            onChange={(event) => setPreferred_location(event.target.value)}
           />
           <div className="col-md-3"></div>
         </div>
 
         <div className="row">
           <div className="col-md-3"></div>
-          <button className="col-md-3" onClick={someFunction}>
-            somefunction
+          <button className="col-md-3" onClick={mutate}>
+            Update Info
           </button>
           <button
             className="col-md-3"
@@ -66,7 +79,11 @@ const Modal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <OverLay setShowModal={props.setShowModal} />,
+        <OverLay
+          setShowModal={props.setShowModal}
+          preferred_location={props.preferred_location}
+          interest={props.interest}
+        />,
         document.querySelector("#modal-root")
       )}
     </>

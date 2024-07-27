@@ -35,11 +35,13 @@ function App() {
             setUsername,
           }}
         >
-          <Routes>
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-          </Routes>
+          {accessToken && (
+            <Routes>
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+            </Routes>
+          )}
           {/* Display component when accessToken is present */}
           {accessToken && <NavBar></NavBar>}
           {!accessToken && showLogin && <Login setShowLogin={setShowLogin} />}

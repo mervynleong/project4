@@ -10,7 +10,8 @@
 
 .modal {
   position: fixed;
-  background: green;
+  background: black;
+  color: white;
   top: 30vh;
   bottom: 30vh;
   left: 10%;

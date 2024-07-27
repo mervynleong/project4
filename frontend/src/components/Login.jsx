@@ -29,6 +29,7 @@ const Login = (props) => {
       userCtx.setAccessToken(data.access);
       const decoded = jwtDecode(data.access);
       userCtx.setType(decoded.type);
+      userCtx.setUsername(decoded.username);
     }
   }, [data]);
 
