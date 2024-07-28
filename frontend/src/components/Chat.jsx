@@ -11,7 +11,7 @@ const Chat = () => {
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["chat"],
     queryFn: async () =>
-      await usingFetch("/chat/all/" + item_uuid, "GET", undefined, userCtx.accessToken),
+      await usingFetch("/chat/allToUser/", "GET", undefined, userCtx.accessToken),
   });
   return <div>bye</div>;
 };
