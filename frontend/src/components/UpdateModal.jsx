@@ -16,7 +16,7 @@ const OverLay = (props) => {
   const { mutate } = useMutation({
     mutationFn: async () =>
       await usingFetch(
-        "/product/updateItem" + props.item_uuid,
+        "/product/updateItem/" + props.item_uuid,
         "PATCH",
         {
           description,

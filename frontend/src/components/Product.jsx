@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useState, useContext } from "react";
 import UpdateModal from "./UpdateModal";
+import ChatModal from "./ChatModal";
 
 const Product = (props) => {
   const userCtx = useContext(UserContext);
@@ -156,6 +157,7 @@ const Product = (props) => {
             className="col-md-3"
             onClick={() => {
               setShowChatModal(true);
+              console.log("hello");
             }}
           >
             Chat With Seller to Purchase
@@ -199,6 +201,14 @@ const Product = (props) => {
       <br></br>
 
       <div className="row"></div>
+
+      {/* <ChatModal
+        setShowChatModal={setShowChatModal}
+        item_name={props.item_name}
+        sell_price={props.sell_price}
+        item_uuid={props.item_uuid}
+        seller_username={props.seller_username}
+      /> */}
 
       {/* <UpdateModal
         setShowUpdateModal={setShowUpdateModal}
