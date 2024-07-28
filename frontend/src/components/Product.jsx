@@ -193,7 +193,7 @@ const Product = (props) => {
                 deleteListing();
               }}
             >
-              delete listing
+              Delete listing
             </button>
           </div>
         )}
