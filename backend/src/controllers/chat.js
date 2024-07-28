@@ -118,6 +118,20 @@ const getChatwithItemId = async (req, res) => {
   }
 };
 
+const getAllChatToUser = async (req, res) => {
+  try {
+    const related = req.decoded.username;
+    const getAllQuery =
+      "SELECT * FROM personnel_chat WHERE (from_who = $1 OR to_who= $1) ORDER BY item_uuid";
+    const result = await pgquery.query(getAllQuery, [related]);
+    const data = result.rows;
+    res.json({ data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid request" });
+  }
+};
+
 const updateChatwithChatId = async (req, res) => {
   try {
     const { text_content } = req.body;
@@ -153,4 +167,5 @@ module.exports = {
   deleteChatPG,
   getChatwithItemId,
   updateChatwithChatId,
+  getAllChatToUser,
 };

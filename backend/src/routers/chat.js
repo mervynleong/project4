@@ -13,6 +13,7 @@ const {
   getChatwithItemId,
   createChatPGBuyer,
   updateChatwithChatId,
+  getAllChatToUser,
 } = require("../controllers/chat");
 
 const { validateChatData, validateChatId } = require("../validators/chat");
@@ -50,5 +51,7 @@ router.patch(
   authGeneral,
   updateChatwithChatId
 );
+
+router.get("/allToUser", authGeneral, getAllChatToUser);
 
 module.exports = router;
