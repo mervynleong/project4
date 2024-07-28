@@ -17,15 +17,7 @@ const Profile = () => {
     queryKey: ["auth"],
     queryFn: async () =>
       await usingFetch("/auth/getUser", "GET", undefined, userCtx.accessToken),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["auth"]);
-      setInterest("");
-      setPreferred_location("");
-      console.log(data.x);
-    },
   });
-
-  useEffect(() => {});
 
   return (
     <>
@@ -118,7 +110,7 @@ const Profile = () => {
             }}
             className="col-md-2"
           >
-            {preferred_location}
+            {data.x[0].preferred_location}
           </div>
           <div
             style={{
@@ -142,7 +134,7 @@ const Profile = () => {
             }}
             className="col-md-2"
           >
-            {interest}
+            {data.x[0].interest}
           </div>
         </div>
 

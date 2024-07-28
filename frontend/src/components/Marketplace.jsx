@@ -3,7 +3,7 @@ import UserContext from "../context/user";
 import { useState, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ItemModal from "./ItemModal";
+import CreateItemModal from "./CreateItemModal";
 import Product from "./Product";
 
 const Marketplace = () => {
@@ -19,7 +19,6 @@ const Marketplace = () => {
   const [seller_username, setSeller_username] = useState("");
   const [buyer_username, setBuyer_username] = useState("");
   const [showItemModal, setShowItemModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["item"],
@@ -117,13 +116,13 @@ const Marketplace = () => {
           })}
 
         {showItemModal && (
-          <ItemModal
+          <CreateItemModal
             setShowItemModal={setShowItemModal}
             item_name={item_name}
             description={description}
             sell_price={sell_price}
             status={status}
-          ></ItemModal>
+          ></CreateItemModal>
         )}
       </div>
     </>

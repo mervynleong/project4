@@ -176,7 +176,7 @@ const OverLay = (props) => {
   );
 };
 
-const ItemModal = (props) => {
+const CreateItemModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
@@ -193,4 +193,4 @@ const ItemModal = (props) => {
   );
 };
 
-export default ItemModal;
+export default CreateItemModal;
