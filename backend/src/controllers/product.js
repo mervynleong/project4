@@ -39,7 +39,10 @@ const deleteItemPG = async (req, res) => {
     const { rows } = await pgquery.query(checkQuery, [item_uuid]);
     const userQuery = "SELECT seller_username FROM item WHERE item_uuid=$1";
     const ans = await pgquery.query(userQuery, [item_uuid]);
-    if (ans.rows[0].seller_username === approvedUser) {
+    if (
+      ans.rows[0].seller_username === approvedUser ||
+      req.decode.type === "ADMIN"
+    ) {
       if (rows[0].item_uuid === item_uuid) {
         const deleteQuery = "DELETE FROM item WHERE item_uuid = $1";
         await pgquery.query(deleteQuery, [item_uuid]);
