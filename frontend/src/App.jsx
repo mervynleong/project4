@@ -7,8 +7,9 @@ import Register from "./components/Register";
 import Chat from "./components/Chat";
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
-import styles from "./css/Header.module.css";
 import Marketplace from "./components/Marketplace";
+import Home from "./components/Home";
+import styles from "./css/Header.module.css";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <>
-      <div className="contaienr">
+      <div className="container">
         <h1>KERONIAO</h1>
         <img src="https://static.vecteezy.com/system/resources/thumbnails/028/896/726/original/2d-cartoon-crow-bird-flying-frame-by-frame-animation-4k-screen-green-4k-free-video.jpg" />
       </div>
@@ -40,6 +41,7 @@ function App() {
               <Route path="/chat" element={<Chat />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/" element={<Home />} />
             </Routes>
           )}
           {/* Display component when accessToken is present */}

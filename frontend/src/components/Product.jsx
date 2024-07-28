@@ -10,32 +10,133 @@ const Product = () => {
   const usingFetch = useFetch();
   const [productModal, setProductModal] = useState(false);
 
-  const { isSuccess, isError, error, isFetching, data } = useQuery({
-    queryKey: ["something here"],
-    queryFn: async () =>
-      await usingFetch(
-        "some endpoint",
-        undefined,
-        undefined,
-        userCtx.accessToken
-      ),
-  });
-
-  const { mutation } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async () =>
-      await usingFetch(
-        "some endpoint",
-        "some method",
-        { someBody },
-        userCtx.accessToken // if needed
+      usingFetch(
+        "/product/product" + item_uuid, // endpoint
+        "DELETE", // method
+        undefined, //body
+        userCtx.accessToken // accessToken
       ),
     onSuccess: () => {
-      // set state here
-      queryClient.invalidateQueries(["something here"]);
+      queryClient.invalidateQueries(["product"]);
     },
   });
+
   return (
-    <div>
+    <div className="container">
+      <div className="row">
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Item Name
+        </div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-2"
+        >
+          {item_name}
+        </div>
+        <div className="row"></div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Description
+        </div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-2"
+        >
+          {description}
+        </div>
+        <div className="row"></div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Sell Price
+        </div>
+
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-2"
+        >
+          {sell_price}
+        </div>
+        <div className="row"></div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Status
+        </div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-2"
+        >
+          {status}
+        </div>
+      </div>
+      <div className="row"></div>
+      {userCtx.type === "SELLER" && (
+        <button
+          style={{
+            padding: "5px",
+            borderRadius: "5px",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+          onClick={() => {
+            setShowEditModal(true);
+          }}
+        >
+          Edit Listing
+        </button>
+      )}
+      <div className="row"></div>
+      {userCtx.type === "BUYER" && (
+        <button
+          style={{
+            padding: "5px",
+            borderRadius: "5px",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+          onClick={() => {
+            setShowEditModal(true);
+          }}
+        >
+          Chat With Seller
+        </button>
+      )}
       {/* something here in jsx */}{" "}
       {isSuccess &&
         data.map((item) => {

@@ -43,73 +43,38 @@ const Marketplace = () => {
   //   },
   // });
 
-  if (buy_price === null) {
-    setBuy_price(0);
-  }
+  // if (buy_price === null) {
+  //   setBuy_price(0);
+  // }
 
-  // Handle input change and convert value to number
-  const sellHandleChange = (e) => {
-    // Parse the string to a number and update the state
-    const value = e.target.value;
-    const parsedValue = value === "" ? 0 : Number(value);
+  // // Handle input change and convert value to number
+  // const sellHandleChange = (e) => {
+  //   // Parse the string to a number and update the state
+  //   const value = e.target.value;
+  //   const parsedValue = value === "" ? 0 : Number(value);
 
-    // Ensure the parsedValue is a number and set it in the state
-    if (!isNaN(parsedValue)) {
-      setSell_price(parsedValue);
-    }
-  };
+  //   // Ensure the parsedValue is a number and set it in the state
+  //   if (!isNaN(parsedValue)) {
+  //     setSell_price(parsedValue);
+  //   }
+  // };
 
-  // Handle input change and convert value to number
-  const buyHandleChange = (e) => {
-    // Parse the string to a number and update the state
-    const value = e.target.value;
-    const parsedValue = value === "" ? 0 : Number(value);
+  // // Handle input change and convert value to number
+  // const buyHandleChange = (e) => {
+  //   // Parse the string to a number and update the state
+  //   const value = e.target.value;
+  //   const parsedValue = value === "" ? 0 : Number(value);
 
-    // Ensure the parsedValue is a number and set it in the state
-    if (!isNaN(parsedValue)) {
-      setBuy_price(parsedValue);
-    }
-  };
+  //   // Ensure the parsedValue is a number and set it in the state
+  //   if (!isNaN(parsedValue)) {
+  //     setBuy_price(parsedValue);
+  //   }
+  // };
   return (
     <>
       <div className="container">
         <h2>Items Available</h2>
         <div className="row">
-          {/* <input
-            type="text"
-            value={item_name}
-            placeholder="Item Name"
-            className="col-md-3"
-            onChange={(event) => setItem_name(event.target.value)}
-          />
-          <input
-            type="text"
-            value={description}
-            placeholder="description"
-            className="col-md-3"
-            onChange={(event) => setDescription(event.target.value)}
-          />
-          <input
-            type="text"
-            value={sell_price}
-            placeholder="sell price"
-            className="col-md-3"
-            onChange={(event) => setSell_price(event.target.value)}
-          />
-          <input
-            type="text"
-            value={sell_price}
-            placeholder="sell price"
-            className="col-md-3"
-            onChange={(event) => setSell_price(event.target.value)}
-          />
-          <input
-            type="text"
-            value={status}
-            placeholder="status"
-            className="col-md-3"
-            onChange={(event) => setStatus(event.target.value)}
-          /> */}
           {userCtx.type === "SELLER" && (
             <button
               style={{
@@ -129,118 +94,26 @@ const Marketplace = () => {
         </div>
         <br />
 
-        <div className="row">
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
-            Item Name
-          </div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-2"
-          >
-            {item_name}
-          </div>
-          <div className="row"></div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
-            Description
-          </div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-2"
-          >
-            {description}
-          </div>
-          <div className="row"></div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
-            Sell Price
-          </div>
+        {isFetching && <h1>Loading...</h1>}
 
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-2"
-          >
-            {sell_price}
-          </div>
-          <div className="row"></div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
-            Status
-          </div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-2"
-          >
-            {status}
-          </div>
-          <div className="row"></div>
-          {userCtx.type === "SELLER" && (
-            <button
-              style={{
-                padding: "5px",
-                borderRadius: "5px",
-                backgroundColor: "black",
-                color: "rgb(49, 238, 49)",
-              }}
-              className="col-md-3"
-              onClick={() => {
-                setShowEditModal(true);
-              }}
-            >
-              Edit Listing
-            </button>
-          )}
-          <div className="row"></div>
-          {userCtx.type === "BUYER" && (
-            <button
-              style={{
-                padding: "5px",
-                borderRadius: "5px",
-                backgroundColor: "black",
-                color: "rgb(49, 238, 49)",
-              }}
-              className="col-md-3"
-              onClick={() => {
-                setShowEditModal(true);
-              }}
-            >
-              Chat With Seller
-            </button>
-          )}
-        </div>
+        {isError && <div>{error.message}</div>}
+
+        {isSuccess &&
+          data.data.map((item) => {
+            return (
+              <Product
+                key={item.id}
+                item_name={item.item_name}
+                description={item.description}
+                sell_price={item.sell_price}
+                status={item.status}
+                item_uuid={item.item_uuid}
+                seller_username={item.seller_username}
+                buyer_username={item.buyer_username}
+                buy_price={item.buy_price}
+              />
+            );
+          })}
 
         {showItemModal && (
           <ItemModal
