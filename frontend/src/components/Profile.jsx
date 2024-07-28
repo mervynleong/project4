@@ -13,18 +13,6 @@ const Profile = () => {
   const [interest, setInterest] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // const { isSuccess, isError, error, isFetching, data } = useQuery({
-  //   queryKey: ["auth"],
-  //   queryFn: async () =>
-  //     await usingFetch("/auth/getUser", "GET", undefined, userCtx.accessToken),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["auth"]);
-  //     setInterest("");
-  //     setPreferred_location("");
-  //     console.log(data.x);
-  //   },
-  // });
-
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["auth"],
     queryFn: async () =>
@@ -124,7 +112,7 @@ const Profile = () => {
             }}
             className="col-md-2"
           >
-            {data.x[0].preferred_location}
+            {data && data.x[0].preferred_location}
           </div>
           <div
             style={{
@@ -148,7 +136,7 @@ const Profile = () => {
             }}
             className="col-md-2"
           >
-            {data.x[0].interest}
+            {data && data.x[0].interest}
           </div>
         </div>
 
