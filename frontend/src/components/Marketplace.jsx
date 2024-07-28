@@ -102,7 +102,7 @@ const Marketplace = () => {
           data.data.map((item, index) => {
             return (
               <Product
-                index={item.id}
+                index={index.index}
                 item_name={item.item_name}
                 description={item.description}
                 sell_price={item.sell_price}

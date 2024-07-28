@@ -10,7 +10,6 @@ const OverLay = (props) => {
   const userCtx = useContext(UserContext);
   const [description, setDescription] = useState(props.description);
   const [sell_price, setSell_price] = useState(props.sell_price);
-  const [item_uuid, setItem_uuid] = useState(props.item_uuid);
   const [item_name, setItem_name] = useState(props.item_name);
   const [status, setStatus] = useState(props.status);
 

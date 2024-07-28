@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import UpdateModal from "./UpdateModal";
 
 const Product = (props) => {
@@ -24,8 +24,6 @@ const Product = (props) => {
       queryClient.invalidateQueries(["product"]);
     },
   });
-
-  useEffect(() => {});
 
   return (
     <div className="container">
@@ -202,14 +200,14 @@ const Product = (props) => {
 
       <div className="row"></div>
 
-      <UpdateModal
+      {/* <UpdateModal
         setShowUpdateModal={setShowUpdateModal}
         item_name={props.item_name}
         description={props.description}
         sell_price={props.sell_price}
         status={props.sell_price}
         item_uuid={props.item_uuid}
-      />
+      /> */}
     </div>
   );
 };

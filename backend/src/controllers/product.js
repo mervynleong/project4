@@ -56,7 +56,7 @@ const deleteItemPG = async (req, res) => {
     res.json({ status: "ok", msg: "item listing deleted" });
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ status: "error", msg: "invalid deletion" });
+    res.status(400).json({ status: "error", msg: `${error.message}` });
   }
 };
 
