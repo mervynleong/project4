@@ -12,10 +12,10 @@ const Product = (props) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showChatModal, setShowChatModal] = useState(false);
 
-  const { mutate } = useMutation({
+  const { mutate: deleteListing } = useMutation({
     mutationFn: async () =>
       usingFetch(
-        "/product/product" + props.item_uuid, // endpoint
+        "/product/" + props.item_uuid, // endpoint
         "DELETE", // method
         undefined, //body
         userCtx.accessToken // accessToken
@@ -24,6 +24,8 @@ const Product = (props) => {
       queryClient.invalidateQueries(["product"]);
     },
   });
+
+  useEffect(() => {});
 
   return (
     <div className="container">
@@ -35,14 +37,33 @@ const Product = (props) => {
           }}
           className="col-md-3"
         >
-          Item Name
+          Sold By:
         </div>
         <div
           style={{
             backgroundColor: "black",
             color: "rgb(49, 238, 49)",
           }}
-          className="col-md-2"
+          className="col-md-3"
+        >
+          {props.seller_username}
+        </div>
+        <div className="row"></div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Item Name:
+        </div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
         >
           {props.item_name}
         </div>
@@ -54,14 +75,14 @@ const Product = (props) => {
           }}
           className="col-md-3"
         >
-          Description
+          Description:
         </div>
         <div
           style={{
             backgroundColor: "black",
             color: "rgb(49, 238, 49)",
           }}
-          className="col-md-2"
+          className="col-md-3"
         >
           {props.description}
         </div>
@@ -73,7 +94,7 @@ const Product = (props) => {
           }}
           className="col-md-3"
         >
-          Sell Price
+          Sell Price:
         </div>
 
         <div
@@ -81,7 +102,7 @@ const Product = (props) => {
             backgroundColor: "black",
             color: "rgb(49, 238, 49)",
           }}
-          className="col-md-2"
+          className="col-md-3"
         >
           {props.sell_price}
         </div>
@@ -93,20 +114,39 @@ const Product = (props) => {
           }}
           className="col-md-3"
         >
-          Status
+          Status:
         </div>
         <div
           style={{
             backgroundColor: "black",
             color: "rgb(49, 238, 49)",
           }}
-          className="col-md-2"
+          className="col-md-3"
         >
           {props.status}
         </div>
+        <div className="row"></div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          Price Bought At:
+        </div>
+        <div
+          style={{
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+          className="col-md-3"
+        >
+          {props.buy_price ? props.buy_price : "This item is not bought yet"}
+        </div>
       </div>
       <div className="row">
-        {userCtx.type === "BUYER" && (
+        {props.status === "AVAILABLE" && userCtx.type === "BUYER" && (
           <button
             style={{
               padding: "2px",
@@ -124,21 +164,38 @@ const Product = (props) => {
           </button>
         )}
         {userCtx.type === "SELLER" && (
-          <button
-            style={{
-              padding: "2px",
-              borderRadius: "10px",
-              gap: "5px",
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-            onClick={() => {
-              setShowUpdateModal(true);
-            }}
-          >
-            Edit Listing
-          </button>
+          <div className="row">
+            <button
+              style={{
+                padding: "2px",
+                borderRadius: "10px",
+                gap: "5px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+              }}
+              className="col-md-3"
+              onClick={() => {
+                setShowUpdateModal(true);
+              }}
+            >
+              Edit Listing
+            </button>
+            <button
+              style={{
+                padding: "2px",
+                borderRadius: "10px",
+                gap: "5px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+              }}
+              className="col-md-3"
+              onClick={() => {
+                deleteListing();
+              }}
+            >
+              delete listing
+            </button>
+          </div>
         )}
       </div>
       <br></br>

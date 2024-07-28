@@ -32,14 +32,24 @@ const createProductPG = async (req, res) => {
 
 const deleteItemPG = async (req, res) => {
   try {
+    const approvedUser = req.decoded.username;
     const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";
     const { rows } = await pgquery.query(checkQuery, [item_uuid]);
-    if (rows[0].item_uuid === item_uuid) {
-      const deleteQuery = "DELETE FROM item WHERE item_uuid = $1";
-      await pgquery.query(deleteQuery, [item_uuid]);
+    const userQuery = "SELECT seller_username FROM item WHERE item_uuid=$1";
+    const ans = await pgquery.query(userQuery, [item_uuid]);
+    if (ans.rows[0].seller_username === approvedUser) {
+      if (rows[0].item_uuid === item_uuid) {
+        const deleteQuery = "DELETE FROM item WHERE item_uuid = $1";
+        await pgquery.query(deleteQuery, [item_uuid]);
+      }
+    } else {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "Not original lister" });
     }
+
     res.json({ status: "ok", msg: "item listing deleted" });
   } catch (error) {
     console.error(error.message);
