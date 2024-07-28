@@ -8,7 +8,6 @@ import styles from "../css/Modal.module.css";
 const OverLay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
-  const queryClient = useQueryClient();
   const [description, setDescription] = useState(props.description);
   const [sell_price, setSell_price] = useState(props.sell_price);
   const [item_uuid, setItem_uuid] = useState(props.item_uuid);
@@ -29,7 +28,6 @@ const OverLay = (props) => {
         userCtx.accessToken
       ),
     onSuccess: () => {
-      queryClient.invalidateQueries(["item"]);
       props.setShowUpdateModal(false);
     },
   });
@@ -38,6 +36,9 @@ const OverLay = (props) => {
     <div className={styles.backdrop}>
       <div className={styles.modal}>
         <div className="row">
+          <div className="col-md-3"></div>
+          <h1>Please Modify Your Information</h1>
+          <br></br>
           <div className="col-md-3"></div>
           <div className="col-md-3">Item Name: </div>
           <input

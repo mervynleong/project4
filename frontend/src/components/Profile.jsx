@@ -13,11 +13,25 @@ const Profile = () => {
   const [interest, setInterest] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  // const { isSuccess, isError, error, isFetching, data } = useQuery({
+  //   queryKey: ["auth"],
+  //   queryFn: async () =>
+  //     await usingFetch("/auth/getUser", "GET", undefined, userCtx.accessToken),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(["auth"]);
+  //     setInterest("");
+  //     setPreferred_location("");
+  //     console.log(data.x);
+  //   },
+  // });
+
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["auth"],
     queryFn: async () =>
       await usingFetch("/auth/getUser", "GET", undefined, userCtx.accessToken),
   });
+
+  useEffect(() => {});
 
   return (
     <>
