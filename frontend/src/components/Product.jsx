@@ -3,17 +3,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useState, useEffect, useContext } from "react";
+import UpdateModal from "./UpdateModal";
 
-const Product = () => {
+const Product = (props) => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const usingFetch = useFetch();
-  const [productModal, setProductModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
 
   const { mutate } = useMutation({
     mutationFn: async () =>
       usingFetch(
-        "/product/product" + item_uuid, // endpoint
+        "/product/product" + props.item_uuid, // endpoint
         "DELETE", // method
         undefined, //body
         userCtx.accessToken // accessToken
@@ -42,7 +44,7 @@ const Product = () => {
           }}
           className="col-md-2"
         >
-          {item_name}
+          {props.item_name}
         </div>
         <div className="row"></div>
         <div
@@ -61,7 +63,7 @@ const Product = () => {
           }}
           className="col-md-2"
         >
-          {description}
+          {props.description}
         </div>
         <div className="row"></div>
         <div
@@ -81,7 +83,7 @@ const Product = () => {
           }}
           className="col-md-2"
         >
-          {sell_price}
+          {props.sell_price}
         </div>
         <div className="row"></div>
         <div
@@ -100,54 +102,56 @@ const Product = () => {
           }}
           className="col-md-2"
         >
-          {status}
+          {props.status}
         </div>
       </div>
+      <div className="row">
+        {userCtx.type === "BUYER" && (
+          <button
+            style={{
+              padding: "2px",
+              borderRadius: "10px",
+              gap: "5px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+            }}
+            className="col-md-3"
+            onClick={() => {
+              setShowChatModal(true);
+            }}
+          >
+            Chat With Seller to Purchase
+          </button>
+        )}
+        {userCtx.type === "SELLER" && (
+          <button
+            style={{
+              padding: "2px",
+              borderRadius: "10px",
+              gap: "5px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+            }}
+            className="col-md-3"
+            onClick={() => {
+              setShowUpdateModal(true);
+            }}
+          >
+            Edit Listing
+          </button>
+        )}
+      </div>
+      <br></br>
+
       <div className="row"></div>
-      {userCtx.type === "SELLER" && (
-        <button
-          style={{
-            padding: "5px",
-            borderRadius: "5px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          className="col-md-3"
-          onClick={() => {
-            setShowEditModal(true);
-          }}
-        >
-          Edit Listing
-        </button>
-      )}
-      <div className="row"></div>
-      {userCtx.type === "BUYER" && (
-        <button
-          style={{
-            padding: "5px",
-            borderRadius: "5px",
-            backgroundColor: "black",
-            color: "rgb(49, 238, 49)",
-          }}
-          className="col-md-3"
-          onClick={() => {
-            setShowEditModal(true);
-          }}
-        >
-          Chat With Seller
-        </button>
-      )}
-      {/* something here in jsx */}{" "}
-      {isSuccess &&
-        data.map((item) => {
-          return (
-            <SOMECOMPONENT
-              key={item._id}
-              id={item._id}
-              //   and something else
-            />
-          );
-        })}
+
+      <UpdateModal
+        showUpdateModal={showUpdateModal}
+        item_name={props.item_name}
+        description={props.description}
+        sell_price={props.sell_price}
+        status={props.sell_price}
+      />
     </div>
   );
 };

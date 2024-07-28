@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ItemModal from "./ItemModal";
+import Product from "./Product";
 
 const Marketplace = () => {
   const queryClient = useQueryClient();
@@ -99,10 +100,10 @@ const Marketplace = () => {
         {isError && <div>{error.message}</div>}
 
         {isSuccess &&
-          data.data.map((item) => {
+          data.data.map((item, index) => {
             return (
               <Product
-                key={item.id}
+                index={item.id}
                 item_name={item.item_name}
                 description={item.description}
                 sell_price={item.sell_price}

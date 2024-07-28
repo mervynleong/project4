@@ -36,7 +36,7 @@ const OverLay = (props) => {
       <div className={styles.modal}>
         <div className="row">
           <div className="col-md-3"></div>
-          <div  className="col-md-3">Interest</div>
+          <div className="col-md-3">Interest</div>
           <input
             style={{
               padding: "5px",
@@ -106,7 +106,7 @@ const OverLay = (props) => {
   );
 };
 
-const Modal = (props) => {
+const ProfileModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
@@ -121,4 +121,4 @@ const Modal = (props) => {
   );
 };
 
-export default Modal;
+export default ProfileModal;

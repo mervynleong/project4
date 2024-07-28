@@ -3,7 +3,7 @@ import UserContext from "../context/user";
 import { useState, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import Modal from "./Modal";
+import ProfileModal from "./ProfileModal";
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -147,11 +147,11 @@ const Profile = () => {
         </div>
 
         {showModal && (
-          <Modal
+          <ProfileModal
             setShowModal={setShowModal}
             interest={interest}
             preferred_location={preferred_location}
-          ></Modal>
+          ></ProfileModal>
         )}
       </div>
     </>
