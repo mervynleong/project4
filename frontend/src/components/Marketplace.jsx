@@ -11,7 +11,7 @@ const Marketplace = () => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [description, setDescription] = useState("");
-  const [buy_price, setBuy_price] = useState(null);
+  const [buy_price, setBuy_price] = useState("");
   const [sell_price, setSell_price] = useState("");
   const [item_uuid, setItem_uuid] = useState("");
   const [item_name, setItem_name] = useState("");

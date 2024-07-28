@@ -203,7 +203,7 @@ const Product = (props) => {
       <div className="row"></div>
 
       <UpdateModal
-        showUpdateModal={showUpdateModal}
+        setShowUpdateModal={setShowUpdateModal}
         item_name={props.item_name}
         description={props.description}
         sell_price={props.sell_price}
