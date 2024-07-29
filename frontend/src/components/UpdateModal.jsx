@@ -38,7 +38,18 @@ const OverLay = (props) => {
       <div className={styles.modal}>
         <div className="row">
           <div className="col-md-3"></div>
-          <h1>Please Modify Your Information</h1>
+          <h1
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            Please Modify Your Information
+          </h1>
           <br></br>
           <div className="col-md-3"></div>
           <div className="col-md-3">Item Name: </div>

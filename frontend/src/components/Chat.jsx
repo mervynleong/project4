@@ -25,7 +25,17 @@ const Chat = () => {
   return (
     <>
       <div className="container">
-        <h2>Select One User to Chat with</h2>
+        <h2
+          style={{
+            padding: "5px",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+        >
+          Select One User to Chat with
+        </h2>
         <div className="row"></div>
         <br />
 
