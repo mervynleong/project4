@@ -11,13 +11,9 @@ const Marketplace = () => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [description, setDescription] = useState("");
-  // const [buy_price, setBuy_price] = useState("");
   const [sell_price, setSell_price] = useState("");
-  // const [item_uuid, setItem_uuid] = useState("");
   const [item_name, setItem_name] = useState("");
   const [status, setStatus] = useState("");
-  // const [seller_username, setSeller_username] = useState("");
-  // const [buyer_username, setBuyer_username] = useState("");
   const [showItemModal, setShowItemModal] = useState(false);
 
   const { isSuccess, isError, error, isFetching, data } = useQuery({
@@ -25,8 +21,6 @@ const Marketplace = () => {
     queryFn: async () =>
       await usingFetch("/product/all", "GET", undefined, userCtx.accessToken),
   });
-
-
 
   // const { mutate } = useMutation({
   //   mutationFn: async () =>
