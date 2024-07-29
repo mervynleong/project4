@@ -35,8 +35,30 @@ const Chat = () => {
             color: "rgb(49, 238, 49)",
           }}
         >
-          Select One User to Chat with
+          Select One Item to Open Chat
         </h2>
+        <h3
+          style={{
+            padding: "5px",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+        >
+          You are: {userCtx.username}
+        </h3>
+        <h3
+          style={{
+            padding: "5px",
+            borderRadius: "15px",
+            gap: "1px",
+            backgroundColor: "black",
+            color: "rgb(49, 238, 49)",
+          }}
+        >
+          Your Role Is: {userCtx.type}
+        </h3>
         <div className="row"></div>
         <br />
 
@@ -52,8 +74,8 @@ const Chat = () => {
                 chat_table_id={item.chat_table_id}
                 item_name={item.item_name}
                 item_uuid={item.item_uuid}
-                from_who={item.from_who}
                 sell_price={item.sell_price}
+                status={item.status}
               />
             );
           })}

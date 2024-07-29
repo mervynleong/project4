@@ -122,7 +122,7 @@ const getAllChatToUser = async (req, res) => {
   try {
     const related = req.decoded.username;
     const getAllQuery =
-      "SELECT DISTINCT ON (item_uuid) pc.chat_table_id, pc.item_uuid, pc.from_who, i.item_name, i.sell_price FROM personnel_chat pc JOIN item i ON pc.item_uuid = i.item_uuid WHERE (pc.from_who = $1 OR pc.to_who= $1) ORDER BY pc.item_uuid, pc.chat_table_id ASC";
+      "SELECT DISTINCT ON (item_uuid) pc.chat_table_id, pc.item_uuid, i.status, i.item_name, i.sell_price FROM personnel_chat pc JOIN item i ON pc.item_uuid = i.item_uuid WHERE (pc.from_who = $1 OR pc.to_who= $1) ORDER BY pc.item_uuid, pc.chat_table_id ASC";
     const result = await pgquery.query(getAllQuery, [related]);
     const data = result.rows;
     res.json({ data });

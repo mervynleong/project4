@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useState, useContext } from "react";
+import IndivChatModal from "./IndivChatModal";
 
 const UserChat = (props) => {
   const userCtx = useContext(UserContext);
@@ -67,25 +68,6 @@ const UserChat = (props) => {
             }}
             className="col-md-3"
           >
-            From Who:
-          </div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
-            {props.from_who}
-          </div>
-          <div className="row"></div>
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "rgb(49, 238, 49)",
-            }}
-            className="col-md-3"
-          >
             Selling Price for Item:
           </div>
           <div
@@ -97,31 +79,52 @@ const UserChat = (props) => {
           >
             {props.sell_price}
           </div>
+          <div className="row"></div>
+          <div
+            style={{
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+            }}
+            className="col-md-3"
+          >
+            Status of Item
+          </div>
+          <div
+            style={{
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+            }}
+            className="col-md-3"
+          >
+            {props.status}
+          </div>
+          <div className="row"></div>
+          <button
+            style={{
+              padding: "2px",
+              borderRadius: "10px",
+              gap: "5px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+            }}
+            className="col-md-3"
+            onClick={() => {
+              setShowIndivChatModal(true);
+            }}
+          >
+            Chat With Person Regarding This Item
+          </button>
         </div>
         <br></br>
 
         <div className="row"></div>
 
-        {/* {showChatModal && (
-          <ChatModal
-            setShowChatModal={setShowChatModal}
-            item_name={props.item_name}
-            sell_price={props.sell_price}
-            item_uuid={props.item_uuid}
-            seller_username={props.seller_username}
+        {showIndivChatModal && (
+          <IndivChatModal
+            setShowIndivChatModal={setShowChatModal}
+            chat_table_id={props.chat_table_id}
           />
         )}
-
-        {showUpdateModal && (
-          <UpdateModal
-            setShowUpdateModal={setShowUpdateModal}
-            item_name={props.item_name}
-            description={props.description}
-            sell_price={props.sell_price}
-            status={props.sell_price}
-            item_uuid={props.item_uuid}
-          />
-        )} */}
       </div>
     </>
   );
