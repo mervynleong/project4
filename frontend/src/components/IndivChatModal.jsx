@@ -11,6 +11,7 @@ const OverLay = (props) => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [text_content, setText_content] = useState("");
+  const [price, setPrice] = useState(0);
 
   const { mutate: replyChat } = useMutation({
     mutationFn: async () =>
@@ -137,7 +138,12 @@ const OverLay = (props) => {
             >
               Close This Chat
             </button>
-            <div className="row"></div>
+            <div className="col-md-3"></div>
+          </div>
+          <div className="row"></div>
+          <br></br>
+          <br></br>
+          <div className="row">
             <button
               style={{
                 padding: "5px",
@@ -149,9 +155,24 @@ const OverLay = (props) => {
               className="col-md-3"
               onClick={() => console.log("hello")}
             >
-              Buy This Item At ($):
+              (Click This to Buy) Price Agreed On($):
             </button>
-            <div className="col-md-3"></div>
+            <input
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "rgb(49, 238, 49)",
+                color: "black",
+              }}
+              type="text"
+              className="col-sm-3"
+              placeholder="price agreed on"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            />
           </div>
         </div>
       </div>
