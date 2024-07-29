@@ -124,6 +124,36 @@ const OverLay = (props) => {
                     <div className="col-md-2">Time Stamp:</div>
                     <div className="col-md-4">{item.timestamp}</div>
                     <div className="col-md-3"></div>
+                    <div className="col-md-5">
+                      <button
+                        style={{
+                          padding: "1px",
+                          borderRadius: "5px",
+                          backgroundColor: "rgb(49, 238, 49)",
+                          color: "black",
+                          textAlign: "center",
+                        }}
+                        chat_table_id={item.chat_table_id}
+                        onClick={() => console.log("hello")}
+                      >
+                        Delete This Message?
+                      </button>
+                    </div>
+                    <div className="col-md-5">
+                      <button
+                        style={{
+                          padding: "1px",
+                          borderRadius: "5px",
+                          backgroundColor: "rgb(49, 238, 49)",
+                          color: "black",
+                          textAlign: "center",
+                        }}
+                        chat_table_id={item.chat_table_id}
+                        onClick={() => console.log("hello")}
+                      >
+                        Edit This Message?
+                      </button>
+                    </div>
                     <br></br>
                     <br></br>
                   </>
