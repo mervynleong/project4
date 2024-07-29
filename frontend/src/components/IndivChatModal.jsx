@@ -4,15 +4,13 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import styles from "../css/Modal.module.css";
+import IndivChatChild from "./IndivChatChild";
 
 const OverLay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [text_content, setText_content] = useState("");
-  //   const [sell_price, setSell_price] = useState(props.sell_price);
-  //   const [item_name, setItem_name] = useState(props.item_name);
-  //   const [status, setStatus] = useState(props.status);
 
   const { mutate: replyChat } = useMutation({
     mutationFn: async () =>
@@ -76,86 +74,14 @@ const OverLay = (props) => {
               data.data.map((item, index) => {
                 return (
                   <>
-                    <div key={index} className="row"></div>
-                    <div className="col-md-3">From: </div>
-                    <div
-                      style={{
-                        padding: "5px",
-                        borderRadius: "15px",
-                        gap: "1px",
-                        backgroundColor: "rgb(49, 238, 49)",
-                        color: "black",
-                        textAlign: "center",
-                      }}
-                      className="col-md-3"
-                    >
-                      {item.from_who}
-                    </div>
-                    <div className="col-md-3">To: </div>
-                    <div
-                      style={{
-                        padding: "5px",
-                        borderRadius: "15px",
-                        gap: "1px",
-                        backgroundColor: "rgb(49, 238, 49)",
-                        color: "black",
-                        textAlign: "center",
-                      }}
-                      className="col-md-3"
-                    >
-                      {item.to_who}
-                    </div>
-                    <div className="col-md-3">Message: </div>
-                    <div
-                      style={{
-                        padding: "5px",
-                        borderRadius: "15px",
-                        gap: "1px",
-                        backgroundColor: "rgb(49, 238, 49)",
-                        color: "black",
-                        textAlign: "center",
-                        width: "100%",
-                      }}
-                      className="col-md-3"
-                    >
-                      {item.text_content}
-                    </div>
-                    <div className="col-md-3"></div>
-                    <div className="col-md-2">Time Stamp:</div>
-                    <div className="col-md-4">{item.timestamp}</div>
-                    <div className="col-md-3"></div>
-                    <div className="col-md-5">
-                      <button
-                        style={{
-                          padding: "1px",
-                          borderRadius: "5px",
-                          backgroundColor: "rgb(49, 238, 49)",
-                          color: "black",
-                          textAlign: "center",
-                        }}
-                        chat_table_id={item.chat_table_id}
-                        onClick={() => console.log("hello")}
-                      >
-                        Delete This Message?
-                      </button>
-                    </div>
-                    <div className="col-md-5">
-                      <button
-                        style={{
-                          padding: "1px",
-                          borderRadius: "5px",
-                          backgroundColor: "rgb(49, 238, 49)",
-                          color: "black",
-                          textAlign: "center",
-                        }}
-                        chat_table_id={item.chat_table_id}
-                        onClick={() => console.log("hello")}
-                      >
-                        Edit This Message?
-                      </button>
-                    </div>
-                    <br></br>
-                    <br></br>
+                    <IndivChatChild
+                      key={index}
+                      from_who={item.from_who}
+                      to_who={item.to_who}
+                      text_content={item.text_content}
+                      timestamp={item.timestamp}
+                      chat_table_id={item.chat_table_id}
+                    />
                   </>
                 );
               })}
@@ -224,6 +150,7 @@ const IndivChatModal = (props) => {
     <>
       {ReactDOM.createPortal(
         <OverLay
+          key={props.key}
           setShowIndivChatModal={props.setShowIndivChatModal}
           chat_table_id={props.chat_table_id}
           item_uuid={props.item_uuid}

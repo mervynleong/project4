@@ -4,8 +4,6 @@ const router = express.Router();
 const {
   authBuyer,
   authGeneral,
-  authSeller,
-  authAdmin,
 } = require("../middleware/auth");
 const {
   replyChatPG,
@@ -35,7 +33,7 @@ router.put(
   authGeneral,
   replyChatPG
 );
-router.delete("/delete/:chat_table_id", authAdmin, deleteChatPG);
+router.delete("/delete/:chat_table_id", authGeneral, deleteChatPG);
 router.get(
   "/all/:item_uuid",
   validateChatId,

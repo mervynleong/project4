@@ -88,6 +88,7 @@ const UserChat = (props) => {
 
         {showIndivChatModal && (
           <IndivChatModal
+            key={props.key}
             setShowIndivChatModal={setShowIndivChatModal}
             item_uuid={props.item_uuid}
             item_name={props.item_name}
