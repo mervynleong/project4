@@ -2,7 +2,7 @@ import React from "react";
 import UserContext from "../context/user";
 import { useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import { useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import CreateItemModal from "./CreateItemModal";
 import Product from "./Product";
 
@@ -53,7 +53,7 @@ const Marketplace = () => {
           data.data.map((item, index) => {
             return (
               <Product
-                index={index.index}
+                key={index}
                 item_name={item.item_name}
                 description={item.description}
                 sell_price={item.sell_price}

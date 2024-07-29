@@ -36,165 +36,86 @@ const OverLay = (props) => {
         undefined,
         userCtx.accessToken
       ),
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(["individaul_chat"]);
-    //   },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["individual_chat"]);
+    },
   });
 
   return (
-    <div className={styles.backdrop}>
-      <div className={styles.modal}>
-        <div className="row">
-          <div className="col-md-3"></div>
-          <h1
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-              textAlign: "center",
-            }}
-          >
-            Please Modify Your Information
-          </h1>
-          <br></br>
-          <div className="col-md-3"></div>
-          <div className="col-md-3">Item Name: </div>
-          <input
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            type="text"
-            className="col-md-3"
-            value={item_name}
-            onChange={(event) => setItem_name(event.target.value)}
-          />
-          <div className="col-md-3"></div>
-        </div>
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-3">Description: </div>
-          <input
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            type="text"
-            className="col-md-3"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
-          <div className="col-md-3"></div>
-        </div>
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-3">Selling Price: </div>
-          <input
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            type="text"
-            className="col-md-3"
-            value={sell_price}
-            onChange={(event) => setSell_price(event.target.value)}
-          />
-          <div className="col-md-3"></div>
-        </div>
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-3">Status:</div>
-          <select
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            className="col-md-3"
-            value={status}
-            onChange={(event) => setStatus(event.target.value)}
-          >
-            <option
+    <>
+      <div className={styles.backdrop}>
+        <div className={styles.modal}>
+          <div className="row">
+            <div className="col-md-3"></div>
+            <h1
               style={{
                 padding: "5px",
                 borderRadius: "15px",
+                gap: "1px",
                 backgroundColor: "rgb(49, 238, 49)",
                 color: "black",
+                textAlign: "center",
               }}
-              value=""
             >
-              Select Status
-            </option>
-            <option
-              style={{
-                padding: "5px",
-                borderRadius: "15px",
-                backgroundColor: "rgb(49, 238, 49)",
-                color: "black",
-              }}
-              value="SOLD"
-            >
-              SOLD
-            </option>
-            <option
-              style={{
-                padding: "5px",
-                borderRadius: "15px",
-                backgroundColor: "rgb(49, 238, 49)",
-                color: "black",
-              }}
-              value="AVAILABLE"
-            >
-              AVAILABLE
-            </option>
-          </select>
-          <div className="col-md-3"></div>
-        </div>
+              Chat Box with Regards to:
+            </h1>
+            {isFetching && <h1>Loading...</h1>}
+            {isError && <div>{error.message}</div>}
+            {isSuccess &&
+              data.data.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    chat_table_id={chat_table_id}
+                    text_content={text_content}
+                    from_who={from_who}
+                    to_who={to_who}
+                    item_uuid={item_uuid}
+                    item_name={item_name}
+                    item_description={item_description}
+                    timestamp={timestamp}
+                    sell_price={sell_price}
+                    seller_username={seller_username}
+                    buyer_username={buyer_username}
+                  />
+                );
+              })}
+            <br></br>
+          </div>
 
-        <div className="row">
-          <div className="col-md-3"></div>
-          <button
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            className="col-md-3"
-            onClick={mutate}
-          >
-            Update Info
-          </button>
-          <button
-            style={{
-              padding: "5px",
-              borderRadius: "15px",
-              gap: "1px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-            }}
-            className="col-md-3"
-            onClick={() => props.setShowUpdateModal(false)}
-          >
-            Cancel
-          </button>
-          <div className="col-md-3"></div>
+          <div className="row">
+            <div className="col-md-3"></div>
+            <button
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "rgb(49, 238, 49)",
+                color: "black",
+              }}
+              className="col-md-3"
+              onClick={mutate}
+            >
+              Update Info
+            </button>
+            <button
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "rgb(49, 238, 49)",
+                color: "black",
+              }}
+              className="col-md-3"
+              onClick={() => props.setShowUpdateModal(false)}
+            >
+              Cancel
+            </button>
+            <div className="col-md-3"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
