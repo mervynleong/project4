@@ -137,6 +137,20 @@ const OverLay = (props) => {
             >
               Close This Chat
             </button>
+            <div className="row"></div>
+            <button
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "rgb(49, 238, 49)",
+                color: "black",
+              }}
+              className="col-md-3"
+              onClick={() => console.log("hello")}
+            >
+              Buy This Item At ($):
+            </button>
             <div className="col-md-3"></div>
           </div>
         </div>
