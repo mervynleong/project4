@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import EditMsgModal from "./EditMsgModal";
 
 const IndivChatChild = (props) => {
   const usingFetch = useFetch();
@@ -105,6 +106,13 @@ const IndivChatChild = (props) => {
         </div>
         <br></br>
         <br></br>
+
+        {editMsgModal && (
+          <EditMsgModal
+            setEditMsgModal={setEditMsgModal}
+            chat_table_id={props.chat_table_id}
+          />
+        )}
       </>
     </>
   );
