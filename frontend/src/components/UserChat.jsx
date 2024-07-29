@@ -89,8 +89,11 @@ const UserChat = (props) => {
         {showIndivChatModal && (
           <IndivChatModal
             setShowIndivChatModal={setShowIndivChatModal}
-            chat_table_id={props.chat_table_id}
             item_uuid={props.item_uuid}
+            item_name={props.item_name}
+            sell_price={props.sell_price}
+            buy_price={props.buy_price}
+            status={props.status}
           />
         )}
       </div>

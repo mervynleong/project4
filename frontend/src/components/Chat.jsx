@@ -70,11 +70,12 @@ const Chat = () => {
           data.data.map((item, index) => {
             return (
               <UserChat
-                index={index.index}
-                chat_table_id={item.chat_table_id}
+                key={index}
                 item_name={item.item_name}
+                description={item.description}
                 item_uuid={item.item_uuid}
                 sell_price={item.sell_price}
+                buy_price={item.buy_price}
                 status={item.status}
               />
             );

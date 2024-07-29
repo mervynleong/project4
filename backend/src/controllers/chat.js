@@ -108,7 +108,7 @@ const getChatwithItemId = async (req, res) => {
   try {
     const item_uuid = req.params.item_uuid;
     const getAllQuery =
-      "SELECT pc.chat_table_id, pc.text_content, pc.from_who, pc.to_who, i.item_uuid, i.item_name AS item_name, i.description AS item_description, pc.timestamp AS timestamp, i.sell_price AS sell_price, p_seller.username AS seller_username, p_buyer.username AS buyer_username FROM personnel_chat pc INNER JOIN item i ON pc.item_uuid = i.item_uuid INNER JOIN statuses s ON i.status = s.status INNER JOIN personnel p_seller ON i.seller_username = p_seller.username LEFT JOIN personnel p_buyer ON i.buyer_username = p_buyer.username WHERE i.item_uuid = $1 ORDER BY pc.timestamp ASC;";
+      "SELECT pc.text_content, pc.from_who, pc.to_who, pc.timestamp AS timestamp FROM personnel_chat pc INNER JOIN item i ON pc.item_uuid = i.item_uuid INNER JOIN statuses s ON i.status = s.status INNER JOIN personnel p_seller ON i.seller_username = p_seller.username LEFT JOIN personnel p_buyer ON i.buyer_username = p_buyer.username WHERE i.item_uuid = $1 ORDER BY pc.timestamp ASC;";
     const result = await pgquery.query(getAllQuery, [item_uuid]);
     const data = result.rows;
     res.json({ data });
@@ -122,7 +122,7 @@ const getAllChatToUser = async (req, res) => {
   try {
     const related = req.decoded.username;
     const getAllQuery =
-      "SELECT DISTINCT ON (item_uuid) pc.chat_table_id, pc.item_uuid, i.status, i.item_name, i.sell_price FROM personnel_chat pc JOIN item i ON pc.item_uuid = i.item_uuid WHERE (pc.from_who = $1 OR pc.to_who= $1) ORDER BY pc.item_uuid, pc.chat_table_id ASC";
+      "SELECT DISTINCT ON (item_uuid) pc.chat_table_id, pc.item_uuid, i.status, i.item_name, i.description, i.sell_price, i.buy_price FROM personnel_chat pc JOIN item i ON pc.item_uuid = i.item_uuid WHERE (pc.from_who = $1 OR pc.to_who= $1) ORDER BY pc.item_uuid, pc.chat_table_id ASC";
     const result = await pgquery.query(getAllQuery, [related]);
     const data = result.rows;
     res.json({ data });
