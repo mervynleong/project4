@@ -9,7 +9,7 @@ const OverLay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
-  //   const [description, setDescription] = useState(props.description);
+  const [text_content, setText_content] = useState("");
   //   const [sell_price, setSell_price] = useState(props.sell_price);
   //   const [item_name, setItem_name] = useState(props.item_name);
   //   const [status, setStatus] = useState(props.status);
@@ -19,11 +19,12 @@ const OverLay = (props) => {
       usingFetch(
         "/chat/reply/" + props.item_uuid, // endpoint
         "PUT", // method
-        undefined, //body
+        { text_content }, //body
         userCtx.accessToken // accessToken
       ),
     onSuccess: () => {
       queryClient.invalidateQueries(["individual_chat"]);
+      setText_content("");
     },
   });
 
@@ -59,10 +60,16 @@ const OverLay = (props) => {
             >
               Chat Box with Regards to:
             </h1>
+
             <div className="row"></div>
+            <br></br>
             <div className="col-md-3">{props.item_name}</div>
-            <div className="col-md-3">{props.sell_price}</div>
-            <div className="col-md-3">{props.status}</div>
+            <div className="col-md-2">Priced At ($):</div>
+            <div className="col-md-1">{props.sell_price}</div>
+            <div className="col-md-2">Item Status:</div>
+            <div className="col-md-2">{props.status}</div>
+            <br></br>
+            <br></br>
             {isFetching && <h1>Loading...</h1>}
             {isError && <div>{error.message}</div>}
             {isSuccess &&
@@ -71,18 +78,80 @@ const OverLay = (props) => {
                   <>
                     <div key={index} className="row"></div>
                     <div className="col-md-3">From: </div>
-                    <div className="col-md-3">{item.from_who}</div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        borderRadius: "15px",
+                        gap: "1px",
+                        backgroundColor: "rgb(49, 238, 49)",
+                        color: "black",
+                        textAlign: "center",
+                      }}
+                      className="col-md-3"
+                    >
+                      {item.from_who}
+                    </div>
                     <div className="col-md-3">To: </div>
-                    <div className="col-md-3">{item.to_who}</div>
-                    <div className="col-md-3">Message</div>
-                    <div className="col-md-3">{item.text_content}</div>
-                    <div className="col-md-3">Time Stamp</div>
-                    <div className="col-md-3">{item.timestamp}</div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        borderRadius: "15px",
+                        gap: "1px",
+                        backgroundColor: "rgb(49, 238, 49)",
+                        color: "black",
+                        textAlign: "center",
+                      }}
+                      className="col-md-3"
+                    >
+                      {item.to_who}
+                    </div>
+                    <div className="col-md-3">Message: </div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        borderRadius: "15px",
+                        gap: "1px",
+                        backgroundColor: "rgb(49, 238, 49)",
+                        color: "black",
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                      className="col-md-3"
+                    >
+                      {item.text_content}
+                    </div>
+                    <div className="col-md-3"></div>
+                    <div className="col-md-2">Time Stamp:</div>
+                    <div className="col-md-4">{item.timestamp}</div>
+                    <div className="col-md-3"></div>
+                    <br></br>
+                    <br></br>
                   </>
                 );
               })}
             <br></br>
           </div>
+
+          <div className="row">
+            <div className="col-md-3"></div>
+            <div className="col-md-3">Put Your Text Here:</div>
+            <input
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "rgb(49, 238, 49)",
+                color: "black",
+                width: "100%",
+              }}
+              type="text"
+              className="col-md-3"
+              value={text_content}
+              onChange={(event) => setText_content(event.target.value)}
+            />
+            <div className="col-md-3"></div>
+          </div>
+          <br></br>
 
           <div className="row">
             <div className="col-md-3"></div>
@@ -128,6 +197,9 @@ const IndivChatModal = (props) => {
           setShowIndivChatModal={props.setShowIndivChatModal}
           chat_table_id={props.chat_table_id}
           item_uuid={props.item_uuid}
+          item_name={props.item_name}
+          sell_price={props.sell_price}
+          status={props.status}
         />,
         document.querySelector("#modal-root")
       )}
