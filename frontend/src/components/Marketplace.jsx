@@ -1,13 +1,12 @@
 import React from "react";
 import UserContext from "../context/user";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery} from "@tanstack/react-query";
 import CreateItemModal from "./CreateItemModal";
 import Product from "./Product";
 
 const Marketplace = () => {
-  const queryClient = useQueryClient();
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [description, setDescription] = useState("");
@@ -22,50 +21,6 @@ const Marketplace = () => {
       await usingFetch("/product/all", "GET", undefined, userCtx.accessToken),
   });
 
-  // const { mutate } = useMutation({
-  //   mutationFn: async () =>
-  //     await usingFetch(
-  //       "/product/new",
-  //       "PUT",
-  //       { description, sell_price, item_name, status },
-  //       userCtx.accessToken
-  //     ),
-  //   onSuccess: () => {
-  //     setDescription("");
-  //     setItem_name("");
-  //     buyHandleChange();
-  //     sellHandleChange();
-  //     queryClient.invalidateQueries(["item"]);
-  //   },
-  // });
-
-  // if (buy_price === null) {
-  //   setBuy_price(0);
-  // }
-
-  // // Handle input change and convert value to number
-  // const sellHandleChange = (e) => {
-  //   // Parse the string to a number and update the state
-  //   const value = e.target.value;
-  //   const parsedValue = value === "" ? 0 : Number(value);
-
-  //   // Ensure the parsedValue is a number and set it in the state
-  //   if (!isNaN(parsedValue)) {
-  //     setSell_price(parsedValue);
-  //   }
-  // };
-
-  // // Handle input change and convert value to number
-  // const buyHandleChange = (e) => {
-  //   // Parse the string to a number and update the state
-  //   const value = e.target.value;
-  //   const parsedValue = value === "" ? 0 : Number(value);
-
-  //   // Ensure the parsedValue is a number and set it in the state
-  //   if (!isNaN(parsedValue)) {
-  //     setBuy_price(parsedValue);
-  //   }
-  // };
   return (
     <>
       <div className="container">

@@ -1,8 +1,8 @@
 import React from "react";
 import UserContext from "../context/user";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import UserChat from "./UserChat";
 
 const Chat = () => {
@@ -79,16 +79,6 @@ const Chat = () => {
               />
             );
           })}
-        {/* 
-        {showItemModal && (
-          <CreateItemModal
-            setShowItemModal={setShowItemModal}
-            item_name={item_name}
-            description={description}
-            sell_price={sell_price}
-            status={status}
-          ></CreateItemModal>
-        )} */}
       </div>
     </>
   );

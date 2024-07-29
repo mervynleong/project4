@@ -27,7 +27,7 @@ const OverLay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <h2>Say something to your seller as a start</h2>
+        <h2>Say something to your seller to Start</h2>
         <div className="row">
           <div className="col-md-3">To: {props.seller_username}</div>
           <div className="col-md-3"></div>

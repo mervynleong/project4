@@ -1,42 +1,9 @@
 import React from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useFetch from "../hooks/useFetch";
-import UserContext from "../context/user";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import IndivChatModal from "./IndivChatModal";
 
 const UserChat = (props) => {
-  const userCtx = useContext(UserContext);
-  const queryClient = useQueryClient();
-  const usingFetch = useFetch();
   const [showIndivChatModal, setShowIndivChatModal] = useState(false);
-
-  const { mutate: replyChat } = useMutation({
-    mutationFn: async () =>
-      usingFetch(
-        "/chat/reply/" + props.item_uuid, // endpoint
-        "PUT", // method
-        undefined, //body
-        userCtx.accessToken // accessToken
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["chat"]);
-    },
-  });
-
-  const { isSuccess, isError, error, isFetching, data } = useQuery({
-    queryKey: ["individual_chat"],
-    queryFn: async () =>
-      await usingFetch(
-        "/chat/all/" + props.item_uuid,
-        "GET",
-        undefined,
-        userCtx.accessToken
-      ),
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(["individaul_chat"]);
-    //   },
-  });
 
   return (
     <>
@@ -121,8 +88,9 @@ const UserChat = (props) => {
 
         {showIndivChatModal && (
           <IndivChatModal
-            setShowIndivChatModal={setShowChatModal}
+            setShowIndivChatModal={setShowIndivChatModal}
             chat_table_id={props.chat_table_id}
+            item_uuid={props.item_uuid}
           />
         )}
       </div>

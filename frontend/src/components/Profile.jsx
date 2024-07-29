@@ -2,11 +2,10 @@ import React from "react";
 import UserContext from "../context/user";
 import { useState, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import ProfileModal from "./ProfileModal";
 
 const Profile = () => {
-  const queryClient = useQueryClient();
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [preferred_location, setPreferred_location] = useState("");
