@@ -9,6 +9,7 @@ const Chat = () => {
   const queryClient = useQueryClient();
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
+
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["chat"],
     queryFn: async () =>
@@ -45,7 +46,16 @@ const Chat = () => {
 
         {isSuccess &&
           data.data.map((item, index) => {
-            return <UserChat index={index.index} />;
+            return (
+              <UserChat
+                index={index.index}
+                chat_table_id={item.chat_table_id}
+                item_name={item.item_name}
+                item_uuid={item.item_uuid}
+                from_who={item.from_who}
+                sell_price={item.sell_price}
+              />
+            );
           })}
         {/* 
         {showItemModal && (
