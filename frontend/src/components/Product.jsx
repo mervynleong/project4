@@ -22,7 +22,7 @@ const Product = (props) => {
         userCtx.accessToken // accessToken
       ),
     onSuccess: () => {
-      queryClient.invalidateQueries(["product"]);
+      queryClient.invalidateQueries(["item"]);
     },
   });
 
@@ -157,7 +157,6 @@ const Product = (props) => {
             className="col-md-3"
             onClick={() => {
               setShowChatModal(true);
-              console.log("hello");
             }}
           >
             Chat With Seller to Purchase
