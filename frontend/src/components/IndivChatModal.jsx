@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import styles from "../css/Modal.module.css";
@@ -59,25 +59,26 @@ const OverLay = (props) => {
             >
               Chat Box with Regards to:
             </h1>
+            <div className="row"></div>
+            <div className="col-md-3">{props.item_name}</div>
+            <div className="col-md-3">{props.sell_price}</div>
+            <div className="col-md-3">{props.status}</div>
             {isFetching && <h1>Loading...</h1>}
             {isError && <div>{error.message}</div>}
             {isSuccess &&
               data.data.map((item, index) => {
                 return (
-                  <div
-                    key={index}
-                    chat_table_id={chat_table_id}
-                    text_content={text_content}
-                    from_who={from_who}
-                    to_who={to_who}
-                    item_uuid={item_uuid}
-                    item_name={item_name}
-                    item_description={item_description}
-                    timestamp={timestamp}
-                    sell_price={sell_price}
-                    seller_username={seller_username}
-                    buyer_username={buyer_username}
-                  />
+                  <>
+                    <div key={index} className="row"></div>
+                    <div className="col-md-3">From: </div>
+                    <div className="col-md-3">{item.from_who}</div>
+                    <div className="col-md-3">To: </div>
+                    <div className="col-md-3">{item.to_who}</div>
+                    <div className="col-md-3">Message</div>
+                    <div className="col-md-3">{item.text_content}</div>
+                    <div className="col-md-3">Time Stamp</div>
+                    <div className="col-md-3">{item.timestamp}</div>
+                  </>
                 );
               })}
             <br></br>
@@ -94,9 +95,9 @@ const OverLay = (props) => {
                 color: "black",
               }}
               className="col-md-3"
-              onClick={mutate}
+              onClick={replyChat}
             >
-              Update Info
+              Send Message
             </button>
             <button
               style={{
@@ -107,9 +108,9 @@ const OverLay = (props) => {
                 color: "black",
               }}
               className="col-md-3"
-              onClick={() => props.setShowUpdateModal(false)}
+              onClick={() => props.setShowIndivChatModal(false)}
             >
-              Cancel
+              Close This Chat
             </button>
             <div className="col-md-3"></div>
           </div>
