@@ -202,22 +202,26 @@ const Product = (props) => {
 
       <div className="row"></div>
 
-      {/* <ChatModal
-        setShowChatModal={setShowChatModal}
-        item_name={props.item_name}
-        sell_price={props.sell_price}
-        item_uuid={props.item_uuid}
-        seller_username={props.seller_username}
-      /> */}
+      {showChatModal && (
+        <ChatModal
+          setShowChatModal={setShowChatModal}
+          item_name={props.item_name}
+          sell_price={props.sell_price}
+          item_uuid={props.item_uuid}
+          seller_username={props.seller_username}
+        />
+      )}
 
-      {/* <UpdateModal
-        setShowUpdateModal={setShowUpdateModal}
-        item_name={props.item_name}
-        description={props.description}
-        sell_price={props.sell_price}
-        status={props.sell_price}
-        item_uuid={props.item_uuid}
-      /> */}
+      {showUpdateModal && (
+        <UpdateModal
+          setShowUpdateModal={setShowUpdateModal}
+          item_name={props.item_name}
+          description={props.description}
+          sell_price={props.sell_price}
+          status={props.sell_price}
+          item_uuid={props.item_uuid}
+        />
+      )}
     </div>
   );
 };
