@@ -122,17 +122,6 @@ const OverLay = (props) => {
                 backgroundColor: "rgb(49, 238, 49)",
                 color: "black",
               }}
-              value="SOLD"
-            >
-              SOLD
-            </option>
-            <option
-              style={{
-                padding: "5px",
-                borderRadius: "15px",
-                backgroundColor: "rgb(49, 238, 49)",
-                color: "black",
-              }}
               value="AVAILABLE"
             >
               AVAILABLE
