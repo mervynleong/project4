@@ -23,6 +23,19 @@ const IndivChatChild = (props) => {
     },
   });
 
+  const { mutate: checkUser } = useMutation({
+    mutationFn: async () =>
+      usingFetch(
+        "/chat/delete/" + props.chat_table_id, // endpoint
+        "DELETE", // method
+        undefined, //body
+        userCtx.accessToken // accessToken
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["individual_chat"]);
+    },
+  });
+
   return (
     <>
       <>
@@ -102,6 +115,19 @@ const IndivChatChild = (props) => {
             onClick={() => setEditMsgModal(true)}
           >
             Edit This Message?
+          </button>
+          <button
+            style={{
+              padding: "1px",
+              borderRadius: "5px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+              textAlign: "center",
+            }}
+            // chat_table_id={props.chat_table_id}
+            onClick={() => console.log("hello")}
+          >
+            Check User Details
           </button>
         </div>
         <br></br>
