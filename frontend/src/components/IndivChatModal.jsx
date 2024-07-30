@@ -86,6 +86,7 @@ const OverLay = (props) => {
             {isFetching && <h1>Loading...</h1>}
             {isError && <div>{error.message}</div>}
             {isSuccess &&
+              data &&
               data.data.map((item, index) => {
                 return (
                   <>

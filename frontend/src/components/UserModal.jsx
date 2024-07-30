@@ -1,20 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styles from "../css/Modal.module.css";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import useFetch from "../hooks/useFetch";
+import UserContext from "../context/user";
+import { useContext } from "react";
 
 const OverLay = (props) => {
+  const usingFetch = useFetch();
+  const userCtx = useContext(UserContext);
+
+  const { isSuccess, isError, error, isFetching, data } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: async () =>
+      await usingFetch(
+        "/chat/userInfo/" + props.item_uuid,
+        "GET",
+        undefined,
+        userCtx.accessToken
+      ),
+  });
+
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-3">Interest</div>
-          <div className="col-md-3">{props.interest}</div>
+          <div className="col-md-3">{data[0].seller_interest}</div>
         </div>
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-3">Preferred Location</div>
-          <div className="col-md-3">{props.preferred_location}</div>
+          <div className="col-md-3">{data[0].seller_preferred_location}</div>
         </div>
 
         <div className="row">
@@ -45,8 +63,7 @@ const UserModal = (props) => {
       {ReactDOM.createPortal(
         <OverLay
           setCheckUserModal={props.setCheckUserModal}
-          interest={props.interest}
-          preferred_location={props.preferred_location}
+          item_uuid={props.item_uuid}
         />,
         document.querySelector("#modal-root")
       )}

@@ -163,22 +163,13 @@ const updateChatwithChatId = async (req, res) => {
 
 const getUserInfoWithChat = async (req, res) => {
   try {
-    const chat_table_id = req.params.chat_table_id;
-    // Check if chat exists
-    const checkQuery = "SELECT * FROM personnel_chat WHERE chat_table_id = $1";
-    const { rows } = await pgquery.query(checkQuery, [chat_table_id]);
-    if (rows[0].chat_table_id === chat_table_id) {
-      // checking for from_who details:
-      const checkingUserQuery =
-        "SELECT ps.preferred_location, ps.interest FROM personnel_chat pc INNER JOIN personnel ps ON pc.from_who = ps.username WHERE pc.chat_table_id = $1";
-      const result = await pgquery.query(checkingUserQuery, [chat_table_id]);
-      console.log(result.rows);
-      res.json(result.rows);
-    } else {
-      return res
-        .status(400)
-        .json({ status: "error", msg: "unable to check user details" });
-    }
+    const item_uuid = req.params.item_uuid;
+    const checkingUserQuery =
+      "SELECT ps.preferred_location AS seller_preferred_location, ps.interest AS seller_interest FROM item i INNER JOIN personnel ps ON i.seller_username = ps.username WHERE i.item_uuid = $1";
+    const result = await pgquery.query(checkingUserQuery, [item_uuid]);
+    x = result.rows;
+    console.log(result.rows);
+    res.json(x);
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "invalid query" });

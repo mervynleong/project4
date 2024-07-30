@@ -50,6 +50,6 @@ router.patch(
 
 router.get("/allToUser", authGeneral, getAllChatToUser);
 
-router.get("/userInfo/:chat_table_id", authGeneral, getUserInfoWithChat);
+router.get("/userInfo/:item_uuid", authGeneral, getUserInfoWithChat);
 
 module.exports = router;

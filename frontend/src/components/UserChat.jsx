@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import IndivChatModal from "./IndivChatModal";
+import UserModal from "./UserModal";
 
 const UserChat = (props) => {
   const [showIndivChatModal, setShowIndivChatModal] = useState(false);
+  const [checkUserModal, setCheckUserModal] = useState(false);
 
   return (
     <>
@@ -81,6 +83,23 @@ const UserChat = (props) => {
           >
             Chat With Person Regarding This Item
           </button>
+          <div className="row"></div>
+        </div>
+        <div className="col-md-3">
+          <button
+            style={{
+              padding: "5px",
+              borderRadius: "10px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setCheckUserModal(true);
+            }}
+          >
+            Check Seller's Details
+          </button>
         </div>
         <br></br>
 
@@ -88,13 +107,20 @@ const UserChat = (props) => {
 
         {showIndivChatModal && (
           <IndivChatModal
-            key={props.key}
+            key={props.index}
             setShowIndivChatModal={setShowIndivChatModal}
             item_uuid={props.item_uuid}
             item_name={props.item_name}
             sell_price={props.sell_price}
             buy_price={props.buy_price}
             status={props.status}
+          />
+        )}
+
+        {checkUserModal && (
+          <UserModal
+            setCheckUserModal={setCheckUserModal}
+            item_uuid={props.item_uuid}
           />
         )}
       </div>

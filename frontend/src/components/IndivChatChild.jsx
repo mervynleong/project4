@@ -4,14 +4,12 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import EditMsgModal from "./EditMsgModal";
 
+
 const IndivChatChild = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [editMsgModal, setEditMsgModal] = useState(false);
-  const [checkUserModal, setCheckUserModal] = useState(false);
-  const [interest, setInterest] = useState("");
-  const [preferred_location, setPreferred_location] = useState("");
 
   const { mutate: deleteMsg } = useMutation({
     mutationFn: async () =>
@@ -23,21 +21,6 @@ const IndivChatChild = (props) => {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries(["individual_chat"]);
-    },
-  });
-
-  const { mutate: checkUser } = useMutation({
-    mutationFn: async () =>
-      usingFetch(
-        "/chat/userInfo/" + props.chat_table_id, // endpoint
-        "GET", // method
-        undefined, //body
-        userCtx.accessToken // accessToken
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["check_user"]);
-      setInterest("");
-      setPreferred_location("");
     },
   });
 
@@ -101,7 +84,6 @@ const IndivChatChild = (props) => {
               color: "black",
               textAlign: "center",
             }}
-            chat_table_id={props.chat_table_id}
             onClick={() => deleteMsg()}
           >
             Delete This Message?
@@ -116,30 +98,12 @@ const IndivChatChild = (props) => {
               color: "black",
               textAlign: "center",
             }}
-            chat_table_id={props.chat_table_id}
             onClick={() => setEditMsgModal(true)}
           >
             Edit This Message?
           </button>
         </div>
-        <div className="col-md-3">
-          <button
-            style={{
-              padding: "1px",
-              borderRadius: "5px",
-              backgroundColor: "rgb(49, 238, 49)",
-              color: "black",
-              textAlign: "center",
-            }}
-            chat_table_id={props.chat_table_id}
-            onClick={() => {
-              checkUser();
-              setCheckUserModal(true);
-            }}
-          >
-            Check User Details
-          </button>
-        </div>
+        <div className="col-md-3"></div>
 
         <br></br>
         <br></br>
@@ -148,14 +112,6 @@ const IndivChatChild = (props) => {
           <EditMsgModal
             setEditMsgModal={setEditMsgModal}
             chat_table_id={props.chat_table_id}
-          />
-        )}
-
-        {checkUserModal && (
-          <UserModal
-            setCheckUserModal={setCheckUserModal}
-            interest={interest}
-            preferred_location={preferred_location}
           />
         )}
       </>
