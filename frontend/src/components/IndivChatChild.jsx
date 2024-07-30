@@ -130,6 +130,13 @@ const IndivChatChild = (props) => {
             chat_table_id={props.chat_table_id}
           />
         )}
+
+        {checkUserModal && (
+          <UserModal
+            setCheckUserModal={setCheckUserModal}
+            chat_table_id={props.chat_table_id}
+          />
+        )}
       </>
     </>
   );

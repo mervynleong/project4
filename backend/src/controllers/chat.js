@@ -108,7 +108,7 @@ const getChatwithItemId = async (req, res) => {
   try {
     const item_uuid = req.params.item_uuid;
     const getAllQuery =
-      "SELECT chat_table_id, pc.text_content, pc.from_who, pc.to_who, pc.timestamp AS timestamp FROM personnel_chat pc INNER JOIN item i ON pc.item_uuid = i.item_uuid INNER JOIN statuses s ON i.status = s.status INNER JOIN personnel p_seller ON i.seller_username = p_seller.username LEFT JOIN personnel p_buyer ON i.buyer_username = p_buyer.username WHERE i.item_uuid = $1 ORDER BY pc.timestamp ASC;";
+      "SELECT chat_table_id, pc.text_content, pc.from_who, pc.to_who, pc.timestamp AS timestamp FROM personnel_chat pc INNER JOIN item i ON pc.item_uuid = i.item_uuid INNER JOIN statuses s ON i.status = s.status LEFT JOIN personnel p_seller ON i.seller_username = p_seller.username LEFT JOIN personnel p_buyer ON i.buyer_username = p_buyer.username WHERE i.item_uuid = $1 ORDER BY pc.timestamp ASC;";
     const result = await pgquery.query(getAllQuery, [item_uuid]);
     const data = result.rows;
     res.json({ data });
@@ -161,6 +161,30 @@ const updateChatwithChatId = async (req, res) => {
   }
 };
 
+const getUserInfoWithChat = async (req, res) => {
+  try {
+    const chat_table_id = req.params.chat_table_id;
+    // Check if chat exists
+    const checkQuery = "SELECT * FROM personnel_chat WHERE chat_table_id = $1";
+    const { rows } = await pgquery.query(checkQuery, [chat_table_id]);
+    if (rows[0].chat_table_id === chat_table_id) {
+      // checking for from_who details:
+      const checkingUserQuery =
+        "SELECT ps.preferred_location, ps.interest FROM personnel_chat pc INNER JOIN personnel ps ON pc.from_who = ps.username WHERE pc.chat_table_id = $1";
+      const result = await pgquery.query(checkingUserQuery, [chat_table_id]);
+      console.log(result.rows);
+      res.json(result.rows);
+    } else {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "unable to check user details" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "invalid query" });
+  }
+};
+
 module.exports = {
   createChatPGBuyer,
   replyChatPG,
@@ -168,4 +192,5 @@ module.exports = {
   getChatwithItemId,
   updateChatwithChatId,
   getAllChatToUser,
+  getUserInfoWithChat,
 };

@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  authBuyer,
-  authGeneral,
-} = require("../middleware/auth");
+const { authBuyer, authGeneral } = require("../middleware/auth");
 const {
   replyChatPG,
   deleteChatPG,
@@ -12,6 +9,7 @@ const {
   createChatPGBuyer,
   updateChatwithChatId,
   getAllChatToUser,
+  getUserInfoWithChat,
 } = require("../controllers/chat");
 
 const { validateChatData, validateChatId } = require("../validators/chat");
@@ -51,5 +49,7 @@ router.patch(
 );
 
 router.get("/allToUser", authGeneral, getAllChatToUser);
+
+router.get("/userInfo/:chat_table_id", authGeneral, getUserInfoWithChat);
 
 module.exports = router;

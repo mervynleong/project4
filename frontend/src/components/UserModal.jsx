@@ -3,7 +3,7 @@ import React from 'react';
 const UserModal = () => {
     return (
         <div>
-            
+            Hello
         </div>
     );
 };

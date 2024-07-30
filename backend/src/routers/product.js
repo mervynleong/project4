@@ -59,6 +59,7 @@ router.get(
   authGeneral,
   getItemByIDPG
 );
+
 router.get("/all", authGeneral, getAllItemPG);
 
 module.exports = router;
