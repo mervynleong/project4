@@ -41,6 +41,20 @@ const OverLay = (props) => {
     },
   });
 
+  const { mutate: buyItem } = useMutation({
+    mutationFn: async () =>
+      usingFetch(
+        "/product/buyItem/" + props.item_uuid, // endpoint
+        "PATCH", // method
+        { price }, //body
+        userCtx.accessToken // accessToken
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["item"]);
+      props.setShowIndivChatModal(false);
+    },
+  });
+
   return (
     <>
       <div className={styles.backdrop}>
@@ -143,37 +157,40 @@ const OverLay = (props) => {
           <div className="row"></div>
           <br></br>
           <br></br>
-          <div className="row">
-            <button
-              style={{
-                padding: "5px",
-                borderRadius: "15px",
-                gap: "1px",
-                backgroundColor: "rgb(49, 238, 49)",
-                color: "black",
-              }}
-              className="col-md-3"
-              onClick={() => console.log("hello")}
-            >
-              (Click This to Buy) Price Agreed On($):
-            </button>
-            <input
-              style={{
-                padding: "5px",
-                borderRadius: "15px",
-                gap: "1px",
-                backgroundColor: "rgb(49, 238, 49)",
-                color: "black",
-              }}
-              type="text"
-              className="col-sm-3"
-              placeholder="price agreed on"
-              value={price}
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
-            />
-          </div>
+          {userCtx.type === "BUYER" && (
+            <div className="row">
+              <div className="col-md-3">Price Agreen On ($):</div>
+              <input
+                style={{
+                  padding: "5px",
+                  borderRadius: "15px",
+                  gap: "1px",
+                  backgroundColor: "rgb(49, 238, 49)",
+                  color: "black",
+                }}
+                type="text"
+                className="col-sm-3"
+                placeholder="price agreed on"
+                value={price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              />
+              <button
+                style={{
+                  padding: "5px",
+                  borderRadius: "15px",
+                  gap: "1px",
+                  backgroundColor: "rgb(49, 238, 49)",
+                  color: "black",
+                }}
+                className="col-md-2"
+                onClick={() => buyItem()}
+              >
+                Click To Buy
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
