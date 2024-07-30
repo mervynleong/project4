@@ -1,7 +1,7 @@
 const { body, param } = require("express-validator");
 
 const validateIdInParam = [
-  param("item_uuid", "item_uuid is invalid").notEmpty(),
+  param("item_uuid", "item_uuid is invalid").notEmpty().isUUID(),
 ];
 
 const validateProductData = [

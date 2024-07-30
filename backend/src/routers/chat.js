@@ -16,13 +16,17 @@ const {
   getUserInfoWithChat,
 } = require("../controllers/chat");
 
-const { validateChatData, validateChatId } = require("../validators/chat");
+const {
+  validateChatData,
+  validateChatUUID,
+  validateItemUUID,
+} = require("../validators/chat");
 const { checkErrors } = require("../validators/checkErrors");
 const { validateIdInParam } = require("../validators/product");
 
 router.put(
   "/new/:item_uuid",
-  validateChatId,
+  validateItemUUID,
   validateChatData,
   checkErrors,
   authBuyer,
@@ -30,7 +34,7 @@ router.put(
 );
 router.put(
   "/reply/:item_uuid",
-  validateChatId,
+  validateItemUUID,
   validateChatData,
   checkErrors,
   authGeneral,
@@ -39,7 +43,7 @@ router.put(
 router.delete("/delete/:chat_table_id", authGeneral, deleteChatPG);
 router.get(
   "/all/:item_uuid",
-  validateChatId,
+  validateItemUUID,
   checkErrors,
   authGeneral,
   getChatwithItemId
@@ -47,6 +51,7 @@ router.get(
 
 router.patch(
   "/update/:chat_table_id",
+  validateChatUUID,
   validateChatData,
   checkErrors,
   authGeneral,

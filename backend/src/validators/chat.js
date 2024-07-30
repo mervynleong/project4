@@ -7,6 +7,12 @@ const validateChatData = [
     .isLength({ min: 1, max: 250 }),
 ];
 
-const validateChatId = [param("item_uuid", "item_uuid is invalid").notEmpty()];
+const validateItemUUID = [
+  param("item_uuid", "item_uuid is invalid").notEmpty().isUUID(),
+];
 
-module.exports = { validateChatData, validateChatId };
+const validateChatUUID = [
+  param("chat_table_id", "chat_table_id is invalid").notEmpty().isUUID(),
+];
+
+module.exports = { validateChatData, validateItemUUID, validateChatUUID };
