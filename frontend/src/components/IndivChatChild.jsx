@@ -9,21 +9,9 @@ const IndivChatChild = (props) => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [editMsgModal, setEditMsgModal] = useState(false);
+  const [checkUserModal, setCheckUserModal] = useState(false);
 
   const { mutate: deleteMsg } = useMutation({
-    mutationFn: async () =>
-      usingFetch(
-        "/chat/delete/" + props.chat_table_id, // endpoint
-        "DELETE", // method
-        undefined, //body
-        userCtx.accessToken // accessToken
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["individual_chat"]);
-    },
-  });
-
-  const { mutate: checkUser } = useMutation({
     mutationFn: async () =>
       usingFetch(
         "/chat/delete/" + props.chat_table_id, // endpoint
@@ -102,7 +90,7 @@ const IndivChatChild = (props) => {
             Delete This Message?
           </button>
         </div>
-        <div className="col-md-5">
+        <div className="col-md-4">
           <button
             style={{
               padding: "1px",
@@ -116,6 +104,8 @@ const IndivChatChild = (props) => {
           >
             Edit This Message?
           </button>
+        </div>
+        <div className="col-md-3">
           <button
             style={{
               padding: "1px",
@@ -124,12 +114,13 @@ const IndivChatChild = (props) => {
               color: "black",
               textAlign: "center",
             }}
-            // chat_table_id={props.chat_table_id}
-            onClick={() => console.log("hello")}
+            chat_table_id={props.chat_table_id}
+            onClick={() => setCheckUserModal(true)}
           >
             Check User Details
           </button>
         </div>
+
         <br></br>
         <br></br>
 
