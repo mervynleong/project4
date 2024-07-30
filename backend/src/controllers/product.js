@@ -100,7 +100,7 @@ const updateItemPG = async (req, res) => {
 
 const buyItemPG = async (req, res) => {
   try {
-    const { price: buy_price } = req.body;
+    const { buy_price } = req.body;
     const item_uuid = req.params.item_uuid;
     // Check if item exists
     const checkQuery = "SELECT * FROM item WHERE item_uuid = $1";

@@ -11,7 +11,7 @@ const OverLay = (props) => {
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [text_content, setText_content] = useState("");
-  const [price, setPrice] = useState(0);
+  const [buy_price, setBuy_price] = useState(0);
 
   const { mutate: replyChat } = useMutation({
     mutationFn: async () =>
@@ -46,7 +46,7 @@ const OverLay = (props) => {
       usingFetch(
         "/product/buyItem/" + props.item_uuid, // endpoint
         "PATCH", // method
-        { price }, //body
+        { buy_price }, //body
         userCtx.accessToken // accessToken
       ),
     onSuccess: () => {
@@ -157,7 +157,7 @@ const OverLay = (props) => {
           <div className="row"></div>
           <br></br>
           <br></br>
-          {userCtx.type === "BUYER" && props.item_status === "AVAILABLE" && (
+          {userCtx.type === "BUYER" && props.status === "AVAILABLE" && (
             <div className="row">
               <div className="col-md-3">Price Agreen On ($):</div>
               <input
@@ -171,9 +171,9 @@ const OverLay = (props) => {
                 type="text"
                 className="col-sm-3"
                 placeholder="price agreed on"
-                value={price}
+                value={buy_price}
                 onChange={(e) => {
-                  setPrice(e.target.value);
+                  setBuy_price(e.target.value);
                 }}
               />
               <button
