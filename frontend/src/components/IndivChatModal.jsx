@@ -157,7 +157,7 @@ const OverLay = (props) => {
           <div className="row"></div>
           <br></br>
           <br></br>
-          {userCtx.type === "BUYER" && (
+          {userCtx.type === "BUYER" && props.item_status === "AVAILABLE" && (
             <div className="row">
               <div className="col-md-3">Price Agreen On ($):</div>
               <input
