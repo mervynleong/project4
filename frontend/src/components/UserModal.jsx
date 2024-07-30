@@ -27,12 +27,14 @@ const OverLay = (props) => {
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-3">Interest</div>
-          <div className="col-md-3">{data[0].seller_interest}</div>
+          <div className="col-md-3">{data && data[0].seller_interest}</div>
         </div>
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-3">Preferred Location</div>
-          <div className="col-md-3">{data[0].seller_preferred_location}</div>
+          <div className="col-md-3">
+            {data && data[0].seller_preferred_location}
+          </div>
         </div>
 
         <div className="row">

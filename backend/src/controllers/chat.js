@@ -33,11 +33,23 @@ const deleteChatPG = async (req, res) => {
     const checkQuery = "SELECT * FROM personnel_chat WHERE chat_table_id = $1";
     const { rows } = await pgquery.query(checkQuery, [chat_table_id]);
     console.log(rows);
-    if (rows[0].chat_table_id === chat_table_id) {
-      const deleteQuery = "DELETE FROM personnel_chat WHERE chat_table_id = $1";
-      await pgquery.query(deleteQuery, [chat_table_id]);
+    const checkUserQuery =
+      "SELECT from_who FROM personnel_chat WHERE chat_table_id = $1";
+    const result = await pgquery.query(checkUserQuery, [chat_table_id]);
+    console.log(result.rows[0].from_who);
+    if (req.decoded.username === result.rows[0].from_who) {
+      if (rows[0].chat_table_id === chat_table_id) {
+        const deleteQuery =
+          "DELETE FROM personnel_chat WHERE chat_table_id = $1";
+        await pgquery.query(deleteQuery, [chat_table_id]);
+      }
+      res.json({ status: "ok", msg: "chat deleted" });
+    } else {
+      return res.json({
+        status: "error",
+        msg: "You are not the original sender",
+      });
     }
-    res.json({ status: "ok", msg: "chat deleted" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "invalid deletion" });
@@ -164,6 +176,7 @@ const updateChatwithChatId = async (req, res) => {
 const getUserInfoWithChat = async (req, res) => {
   try {
     const item_uuid = req.params.item_uuid;
+
     const checkingUserQuery =
       "SELECT ps.preferred_location AS seller_preferred_location, ps.interest AS seller_interest FROM item i INNER JOIN personnel ps ON i.seller_username = ps.username WHERE i.item_uuid = $1";
     const result = await pgquery.query(checkingUserQuery, [item_uuid]);
