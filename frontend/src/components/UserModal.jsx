@@ -45,7 +45,6 @@ const UserModal = (props) => {
       {ReactDOM.createPortal(
         <OverLay
           setCheckUserModal={props.setCheckUserModal}
-          chat_table_id={props.chat_table_id}
           interest={props.interest}
           preferred_location={props.preferred_location}
         />,

@@ -10,6 +10,8 @@ const IndivChatChild = (props) => {
   const queryClient = useQueryClient();
   const [editMsgModal, setEditMsgModal] = useState(false);
   const [checkUserModal, setCheckUserModal] = useState(false);
+  const [interest, setInterest] = useState("");
+  const [preferred_location, setPreferred_location] = useState("");
 
   const { mutate: deleteMsg } = useMutation({
     mutationFn: async () =>
@@ -21,6 +23,21 @@ const IndivChatChild = (props) => {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries(["individual_chat"]);
+    },
+  });
+
+  const { mutate: checkUser } = useMutation({
+    mutationFn: async () =>
+      usingFetch(
+        "/chat/userInfo/" + props.chat_table_id, // endpoint
+        "GET", // method
+        undefined, //body
+        userCtx.accessToken // accessToken
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["check_user"]);
+      setInterest("");
+      setPreferred_location("");
     },
   });
 
@@ -115,7 +132,10 @@ const IndivChatChild = (props) => {
               textAlign: "center",
             }}
             chat_table_id={props.chat_table_id}
-            onClick={() => setCheckUserModal(true)}
+            onClick={() => {
+              checkUser();
+              setCheckUserModal(true);
+            }}
           >
             Check User Details
           </button>
@@ -134,7 +154,8 @@ const IndivChatChild = (props) => {
         {checkUserModal && (
           <UserModal
             setCheckUserModal={setCheckUserModal}
-            chat_table_id={props.chat_table_id}
+            interest={interest}
+            preferred_location={preferred_location}
           />
         )}
       </>
