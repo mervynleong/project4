@@ -14,6 +14,13 @@ const OverLay = (props) => {
   const [item_name, setItem_name] = useState(props.item_name);
   const [status, setStatus] = useState(props.status);
 
+  const [errors, setErrors] = useState({
+    item_name: "",
+    description: "",
+    sell_price: "",
+    status: "",
+  });
+
   const { mutate } = useMutation({
     mutationFn: async () =>
       await usingFetch(
@@ -32,6 +39,55 @@ const OverLay = (props) => {
       props.setShowUpdateModal(false);
     },
   });
+
+  const handleSubmit = () => {
+    // Reset errors
+    setErrors({
+      item_name: "",
+      description: "",
+      sell_price: "",
+      status: "",
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!item_name) {
+      newErrors.item_name = "Item Name is required!";
+      isValid = false;
+    } else if (item_name.length > 20) {
+      newErrors.item_name =
+        "Item Name must not be more than 20 characters long!";
+      isValid = false;
+    }
+
+    if (!description) {
+      newErrors.description = "Description is required!";
+      isValid = false;
+    }
+
+    if (!sell_price) {
+      newErrors.sell_price = "Selling Price is required!";
+      isValid = false;
+    } else if (isNaN(Number(sell_price)) || Number(sell_price) <= 0) {
+      newErrors.sell_price = "Selling Price must be a valid positive number!";
+      isValid = false;
+    }
+
+    if (!status) {
+      newErrors.status = "Status must be AVAILABLE or SOLD!";
+      isValid = false;
+    } else if (status !== "AVAILABLE" || status !== "SOLD") {
+      newErrors.status = "Status must be AVAILBLE or SOLD!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      mutate();
+    } else {
+      setErrors(newErrors);
+    }
+  };
 
   return (
     <div className={styles.backdrop}>
@@ -67,6 +123,21 @@ const OverLay = (props) => {
             onChange={(event) => setItem_name(event.target.value)}
           />
           <div className="col-md-3"></div>
+          {errors.item_name && (
+            <div
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+                textAlign: "center",
+              }}
+              className="col-md-3"
+            >
+              {errors.item_name}
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-md-3"></div>
@@ -85,6 +156,21 @@ const OverLay = (props) => {
             onChange={(event) => setDescription(event.target.value)}
           />
           <div className="col-md-3"></div>
+          {errors.description && (
+            <div
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+                textAlign: "center",
+              }}
+              className="col-md-3"
+            >
+              {errors.description}
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-md-3"></div>
@@ -103,6 +189,21 @@ const OverLay = (props) => {
             onChange={(event) => setSell_price(event.target.value)}
           />
           <div className="col-md-3"></div>
+          {errors.sell_price && (
+            <div
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+                textAlign: "center",
+              }}
+              className="col-md-3"
+            >
+              {errors.sell_price}
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-md-3"></div>
@@ -153,6 +254,21 @@ const OverLay = (props) => {
             </option>
           </select>
           <div className="col-md-3"></div>
+          {errors.status && (
+            <div
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+                textAlign: "center",
+              }}
+              className="col-md-3"
+            >
+              {errors.status}
+            </div>
+          )}
         </div>
 
         <div className="row">
@@ -166,7 +282,7 @@ const OverLay = (props) => {
               color: "black",
             }}
             className="col-md-3"
-            onClick={mutate}
+            onClick={handleSubmit}
           >
             Update Info
           </button>
