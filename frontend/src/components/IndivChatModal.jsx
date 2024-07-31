@@ -17,6 +17,10 @@ const OverLay = (props) => {
     text_content: "",
   });
 
+  const [priceError, setPriceError] = useState({
+    buy_price: "",
+  });
+
   const { mutate: replyChat } = useMutation({
     mutationFn: async () =>
       usingFetch(
@@ -81,6 +85,30 @@ const OverLay = (props) => {
       replyChat();
     } else {
       setErrors(newErrors);
+    }
+  };
+
+  const priceHandleSubmit = () => {
+    // Reset errors
+    setPriceError({
+      buy_price: 0,
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!buy_price) {
+      newErrors.buy_price = "An agreed Buying Price is required!";
+      isValid = false;
+    } else if (isNaN(Number(buy_price)) || Number(buy_price) <= 0) {
+      newErrors.buy_price = "Buying Price must be a valid positive number!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      buyItem();
+    } else {
+      setPriceError(newErrors);
     }
   };
 
@@ -231,10 +259,25 @@ const OverLay = (props) => {
                   color: "black",
                 }}
                 className="col-md-2"
-                onClick={() => buyItem()}
+                onClick={priceHandleSubmit}
               >
                 Click To Buy
               </button>
+              {priceError.buy_price && (
+                <div
+                  style={{
+                    padding: "5px",
+                    borderRadius: "15px",
+                    gap: "1px",
+                    backgroundColor: "black",
+                    color: "rgb(49, 238, 49)",
+                    textAlign: "center",
+                  }}
+                  className="col-md-3"
+                >
+                  {priceError.buy_price}
+                </div>
+              )}
             </div>
           )}
         </div>
