@@ -30,7 +30,11 @@ const NavBar = () => {
         <li>
           <button
             onClick={handleLogout}
-            style={{ backgroundColor: "rgb(49, 238, 49)", color: "black" }}
+            style={{
+              borderRadius: "10px",
+              backgroundColor: "rgb(49, 238, 49)",
+              color: "black",
+            }}
           >
             Logout?
           </button>
