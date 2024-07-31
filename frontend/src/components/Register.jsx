@@ -52,6 +52,9 @@ const Register = (props) => {
     if (!email) {
       newErrors.email = "Email is required!";
       isValid = false;
+    } else if (!email.includes("@")) {
+      newErrors.email = "Email must be a valid email!";
+      isValid = false;
     }
 
     if (!password) {
@@ -76,7 +79,7 @@ const Register = (props) => {
       isValid = false;
     }
 
-    if (type === "none") {
+    if (type !== "BUYER" || type !== "SELLER" || type !== "ADMIN") {
       newErrors.type = "Type is required!";
       isValid = false;
     }
@@ -100,7 +103,7 @@ const Register = (props) => {
             backgroundColor: "black",
             color: "rgb(49, 238, 49)",
           }}
-          type="text"
+          type="email"
           required={email.toString()}
           className="col-sm-3"
           placeholder="email"

@@ -12,6 +12,11 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
   const { isError, error, data, refetch } = useQuery({
     queryKey: ["login"],
     queryFn: async () => {
@@ -37,6 +42,39 @@ const Login = (props) => {
     setShowPassword(!showPassword);
   };
 
+  const handleSubmit = () => {
+    // Reset errors
+    setErrors({
+      email: "",
+      password: "",
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!email) {
+      newErrors.email = "Email is required!";
+      isValid = false;
+    } else if (!email.includes("@")) {
+      newErrors.email = "Email must be a valid email!";
+      isValid = false;
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required!";
+      isValid = false;
+    } else if (password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters long!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      refetch();
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
   return (
     <>
       <br />
@@ -59,6 +97,21 @@ const Login = (props) => {
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
+        {errors.email && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-md-4"
+          >
+            {errors.email}
+          </div>
+        )}
         <div className="col-md-4"></div>
       </div>
 
@@ -94,6 +147,21 @@ const Login = (props) => {
             {showPassword ? "🙈" : "🙉"}
           </button>
         </div>
+        {errors.password && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-md-4"
+          >
+            {errors.password}
+          </div>
+        )}
         <div className="col-md-4"></div>
       </div>
 
@@ -110,7 +178,7 @@ const Login = (props) => {
               width: "100%",
             }}
             className="col-md-4"
-            onClick={refetch}
+            onClick={handleSubmit}
           >
             Login
           </button>
