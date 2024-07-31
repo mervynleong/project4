@@ -10,6 +10,10 @@ const OverLay = (props) => {
   const userCtx = useContext(UserContext);
   const [text_content, setText_content] = useState("");
 
+  const [errors, setErrors] = useState({
+    text_content: "",
+  });
+
   const { mutate } = useMutation({
     mutationFn: async () =>
       await usingFetch(
@@ -24,6 +28,32 @@ const OverLay = (props) => {
       props.setShowChatModal(false);
     },
   });
+
+  const handleSubmit = () => {
+    // Reset errors
+    setErrors({
+      text_content: "",
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!text_content) {
+      newErrors.text_content = "A message is required to be able to proceed";
+      isValid = false;
+    } else if (text_content.length > 250) {
+      newErrors.text_content =
+        "Message must not be more than 250 characters long!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      mutate();
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
@@ -57,6 +87,22 @@ const OverLay = (props) => {
             onChange={(event) => setText_content(event.target.value)}
           />
           <div className="col-md-3"></div>
+          {errors.text_content && (
+            <div
+              style={{
+                padding: "5px",
+                borderRadius: "15px",
+                gap: "1px",
+                backgroundColor: "black",
+                color: "rgb(49, 238, 49)",
+                textAlign: "center",
+                width: "100%",
+              }}
+              className="col-md-3"
+            >
+              {errors.text_content}
+            </div>
+          )}
         </div>
         <br></br>
         <div className="row">
@@ -70,7 +116,7 @@ const OverLay = (props) => {
               color: "black",
             }}
             className="col-md-3"
-            onClick={mutate}
+            onClick={handleSubmit}
           >
             Send Text
           </button>
