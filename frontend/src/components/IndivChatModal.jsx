@@ -13,6 +13,10 @@ const OverLay = (props) => {
   const [text_content, setText_content] = useState("");
   const [buy_price, setBuy_price] = useState(0);
 
+  const [errors, setErrors] = useState({
+    text_content: "",
+  });
+
   const { mutate: replyChat } = useMutation({
     mutationFn: async () =>
       usingFetch(
@@ -54,6 +58,31 @@ const OverLay = (props) => {
       props.setShowIndivChatModal(false);
     },
   });
+
+  const handleSubmit = () => {
+    // Reset errors
+    setErrors({
+      text_content: "",
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!text_content) {
+      newErrors.text_content = "A message is required to be able to proceed";
+      isValid = false;
+    } else if (text_content.length > 250) {
+      newErrors.text_content =
+        "Message must not be more than 250 characters long!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      replyChat();
+    } else {
+      setErrors(newErrors);
+    }
+  };
 
   return (
     <>
@@ -122,6 +151,22 @@ const OverLay = (props) => {
               onChange={(event) => setText_content(event.target.value)}
             />
             <div className="col-md-3"></div>
+            {errors.text_content && (
+              <div
+                style={{
+                  padding: "5px",
+                  borderRadius: "15px",
+                  gap: "1px",
+                  backgroundColor: "black",
+                  color: "rgb(49, 238, 49)",
+                  textAlign: "center",
+                  width: "100%",
+                }}
+                className="col-md-3"
+              >
+                {errors.text_content}
+              </div>
+            )}
           </div>
           <br></br>
 
@@ -136,7 +181,7 @@ const OverLay = (props) => {
                 color: "black",
               }}
               className="col-md-3"
-              onClick={replyChat}
+              onClick={handleSubmit}
             >
               Send Message
             </button>
