@@ -8,7 +8,7 @@ const NavBar = () => {
   const userCtx = useContext(UserContext);
 
   const handleLogout = () => {
-    window.localStorage.removeItem();
+    // window.localStorage.removeItem();
     window.location.reload();
   };
 
