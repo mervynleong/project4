@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  authBuyer,
-  authGeneral,
-  authAdminAndSeller,
-} = require("../middleware/auth");
+const { authBuyer, authGeneral } = require("../middleware/auth");
 const {
   replyChatPG,
   deleteChatPG,
@@ -40,7 +36,15 @@ router.put(
   authGeneral,
   replyChatPG
 );
-router.delete("/delete/:chat_table_id", authGeneral, deleteChatPG);
+
+router.delete(
+  "/delete/:chat_table_id",
+  validateChatUUID,
+  checkErrors,
+  authGeneral,
+  deleteChatPG
+);
+
 router.get(
   "/all/:item_uuid",
   validateItemUUID,
@@ -58,8 +62,6 @@ router.patch(
   updateChatwithChatId
 );
 
-router.get("/allToUser", authGeneral, getAllChatToUser);
-
 router.get(
   "/userInfo/:item_uuid",
   validateIdInParam,
@@ -67,5 +69,7 @@ router.get(
   authGeneral,
   getUserInfoWithChat
 );
+
+router.get("/allToUser", authGeneral, getAllChatToUser);
 
 module.exports = router;

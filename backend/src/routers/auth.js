@@ -4,9 +4,7 @@ const router = express.Router();
 const {
   validateReg,
   validateLogin,
-  validateRefresh,
   validateDeleteAcc,
-  validateUserDetails,
 } = require("../validators/auth");
 
 const {
@@ -23,13 +21,7 @@ const { checkErrors } = require("../validators/checkErrors");
 router.put("/regPg", validateReg, checkErrors, registerPG);
 router.post("/logPg", validateLogin, checkErrors, loginPG);
 router.delete("/delAcc", validateDeleteAcc, checkErrors, authAdmin, deleteAcc);
-router.patch(
-  "/update",
-  validateUserDetails,
-  checkErrors,
-  authGeneral,
-  updateAcc
-);
+router.patch("/update", authGeneral, updateAcc);
 
 router.get("/getUser", authGeneral, getAllInfo);
 

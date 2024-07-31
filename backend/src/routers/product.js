@@ -20,6 +20,7 @@ const {
 const {
   validateIdInParam,
   validateProductData,
+  validateBuyProduct,
 } = require("../validators/product");
 
 const { checkErrors } = require("../validators/checkErrors");
@@ -34,6 +35,7 @@ router.put(
 router.patch(
   "/buyItem/:item_uuid",
   validateIdInParam,
+  validateBuyProduct,
   checkErrors,
   authBuyer,
   buyItemPG
@@ -47,6 +49,7 @@ router.delete(
 );
 router.patch(
   "/updateItem/:item_uuid",
+  validateIdInParam,
   validateProductData,
   checkErrors,
   authSeller,

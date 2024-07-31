@@ -18,7 +18,14 @@ const validateProductData = [
     .isString(),
 ];
 
+const validateBuyProduct = [
+  body("buy_price", "buy price must be numeric and not empty")
+    .notEmpty()
+    .isNumeric(),
+];
+
 module.exports = {
   validateIdInParam,
   validateProductData,
+  validateBuyProduct,
 };
