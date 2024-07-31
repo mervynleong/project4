@@ -8,8 +8,8 @@ import UserContext from "../context/user";
 const Login = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("seller@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState({
