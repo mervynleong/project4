@@ -4,12 +4,12 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import EditMsgModal from "./EditMsgModal";
 
-
 const IndivChatChild = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
   const [editMsgModal, setEditMsgModal] = useState(false);
+
 
   const { mutate: deleteMsg } = useMutation({
     mutationFn: async () =>
@@ -23,6 +23,8 @@ const IndivChatChild = (props) => {
       queryClient.invalidateQueries(["individual_chat"]);
     },
   });
+
+  
 
   return (
     <>
