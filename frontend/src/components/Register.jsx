@@ -11,6 +11,14 @@ const Register = (props) => {
   const [confirmPW, setConfirmPW] = useState("");
   const [username, setUsername] = useState("");
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPW: "",
+    username: "",
+    type: "",
+  });
+
   const { isSuccess, isError, error, isFetching, data } = useQuery({
     queryKey: ["reg"],
     queryFn: async () => await usingFetch("/types"),
@@ -28,6 +36,58 @@ const Register = (props) => {
     onSuccess: () => props.setShowLogin(true),
   });
 
+  const handleSubmit = () => {
+    // Reset errors
+    setErrors({
+      email: "",
+      password: "",
+      confirmPW: "",
+      username: "",
+      type: "",
+    });
+
+    let isValid = true;
+    let newErrors = {};
+
+    if (!email) {
+      newErrors.email = "Email is required!";
+      isValid = false;
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required!";
+      isValid = false;
+    } else if (password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters long!";
+      isValid = false;
+    }
+
+    if (password !== confirmPW) {
+      newErrors.confirmPW = "Passwords do not match!";
+      isValid = false;
+    } else if (confirmPW.length > 0 && confirmPW.length < 8) {
+      newErrors.confirmPW =
+        "Confirming Password must be at least 8 characters long!";
+      isValid = false;
+    }
+
+    if (!username) {
+      newErrors.username = "Username is required!";
+      isValid = false;
+    }
+
+    if (type === "none") {
+      newErrors.type = "Type is required!";
+      isValid = false;
+    }
+
+    if (isValid) {
+      mutate();
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
   return (
     <>
       <div className="row">
@@ -41,6 +101,7 @@ const Register = (props) => {
             color: "rgb(49, 238, 49)",
           }}
           type="text"
+          required={email.toString()}
           className="col-sm-3"
           placeholder="email"
           value={email}
@@ -48,6 +109,21 @@ const Register = (props) => {
             setEmail(e.target.value);
           }}
         />
+        {errors.email && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-sm-3"
+          >
+            {errors.email}
+          </div>
+        )}
         <div className="col-sm-1"></div>
       </div>
 
@@ -62,6 +138,7 @@ const Register = (props) => {
             color: "rgb(49, 238, 49)",
           }}
           type="text"
+          required={password.toString()}
           className="col-sm-3"
           placeholder="password"
           value={password}
@@ -69,6 +146,21 @@ const Register = (props) => {
             setPassword(e.target.value);
           }}
         />
+        {errors.password && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-sm-3"
+          >
+            {errors.password}
+          </div>
+        )}
         <div className="col-sm-1"></div>
       </div>
 
@@ -83,6 +175,7 @@ const Register = (props) => {
             color: "rgb(49, 238, 49)",
           }}
           type="text"
+          require={password.toString()}
           className="col-sm-3"
           placeholder="confirm password"
           value={confirmPW}
@@ -90,6 +183,21 @@ const Register = (props) => {
             setConfirmPW(e.target.value);
           }}
         />
+        {errors.confirmPW && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-sm-3"
+          >
+            {errors.confirmPW}
+          </div>
+        )}
         <div className="col-sm-1"></div>
       </div>
 
@@ -104,6 +212,7 @@ const Register = (props) => {
             color: "rgb(49, 238, 49)",
           }}
           type="text"
+          required={password.toString()}
           className="col-sm-3"
           placeholder="username"
           value={username}
@@ -111,6 +220,21 @@ const Register = (props) => {
             setUsername(e.target.value);
           }}
         />
+        {errors.username && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-sm-3"
+          >
+            {errors.username}
+          </div>
+        )}
         <div className="col-sm-1"></div>
       </div>
 
@@ -125,6 +249,7 @@ const Register = (props) => {
             color: "rgb(49, 238, 49)",
           }}
           name="type"
+          required={password.toString()}
           id="types"
           className="col-sm-3"
           value={type}
@@ -140,6 +265,21 @@ const Register = (props) => {
               );
             })}
         </select>
+        {errors.type && (
+          <div
+            style={{
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
+              backgroundColor: "black",
+              color: "rgb(49, 238, 49)",
+              textAlign: "center",
+            }}
+            className="col-sm-3"
+          >
+            {errors.type}
+          </div>
+        )}
         <div className="col-sm-1"></div>
       </div>
       <div className="row">
@@ -156,8 +296,7 @@ const Register = (props) => {
             }}
             className="col-sm-3"
             onClick={() => {
-              mutate();
-              props.setShowLogin(true);
+              handleSubmit();
             }}
           >
             Register
