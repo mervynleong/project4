@@ -4,8 +4,14 @@ import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import { useQuery } from "@tanstack/react-query";
 import UserContext from "../context/user";
+import mp3File from "../sounds/unlockSound.mp3";
 
 const Login = (props) => {
+  // sound file
+  const playAudio = () => {
+    const audio = new Audio(mp3File);
+    audio.play();
+  };
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -38,6 +44,7 @@ const Login = (props) => {
       const decoded = jwtDecode(data.access);
       userCtx.setType(decoded.type);
       userCtx.setUsername(decoded.username);
+      playAudio();
     }
   }, [data]);
 
