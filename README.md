@@ -102,6 +102,15 @@ Clicking on the **PROFILE** button will lead the user to be able to view/edit th
 - Cascading Style Sheets
 - Hypertext Markup Language
 
+### Environment variables (to put in .env file)
+
+- Frontend: VITE_SERVER (for localhost)
+- Backend:
+  1. PORT="Insert Your localhost PORT HERE"
+  2. ACCESS_SECRET="Insert your access secret here"
+  3. REFRESH_SECRET="Insert your refresh secret here"
+  4. PASSWORD="Insert your password here" **To connect to SQL database**
+
 ### TO NOTE
 
 There is an admin role to **delete listings, messages and also users**. However these features are **not available on the frontend** and will only be available to the user if he/she has the access to the backend's API.
@@ -116,6 +125,11 @@ In addition. Due to the **constraints** PostGresSQL has, cascade deletion would 
 
 - Addition of cloudinary to allow upload of file images.
 - Addition of web-sockets to allow user to see the chat being updated live.
+- Addition of refresh token to stay logged in even after the user is logged out.
+- Addition of Rating system to rate sellers and buyers.
+- Addition of Rating system to rate items
+- Addition of Reviews to buyers to review on items.
+- Addition of STRIPE payment system.
 
 ### References
 
