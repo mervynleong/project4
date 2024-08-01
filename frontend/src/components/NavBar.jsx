@@ -1,17 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styles from "../css/NavBar.module.css";
 import React from "react";
-import UserContext from "../context/user";
-import { useContext } from "react";
 
-const NavBar = () => {
-  const userCtx = useContext(UserContext);
-
-  const handleLogout = () => {
-    // window.localStorage.removeItem();
-    window.location.reload();
-  };
-
+const NavBar = ({ handleLogout }) => {
   return (
     <nav>
       <ul>
@@ -29,14 +20,16 @@ const NavBar = () => {
         </li>
         <li>
           <button
-            onClick={handleLogout}
             style={{
-              borderRadius: "10px",
+              padding: "5px",
+              borderRadius: "15px",
+              gap: "1px",
               backgroundColor: "rgb(49, 238, 49)",
               color: "black",
             }}
+            onClick={handleLogout}
           >
-            Logout?
+            Logout
           </button>
         </li>
       </ul>

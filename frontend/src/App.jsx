@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "./context/user";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -15,11 +16,24 @@ const queryClient = new QueryClient();
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
-  const [showLogin, setShowLogin] = useState(true); // Initially show login
+  const [showLogin, setShowLogin] = useState(true);
   const [type, setType] = useState("");
   const [username, setUsername] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
 
-  
+  const handleLogout = () => {
+    // Clear local storage
+    window.localStorage.removeItem("access");
+    window.localStorage.removeItem("refresh");
+
+    // Clear context values
+    setAccessToken("");
+    setType("");
+    setUsername("");
+    setIsLoggedIn(false);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -36,18 +50,24 @@ function App() {
             setType,
             username,
             setUsername,
+            isLoggedIn,
+            setIsLoggedIn,
+            handleLogout,
           }}
         >
-          {accessToken && (
-            <Routes>
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          )}
           {/* Display component when accessToken is present */}
-          {accessToken && <NavBar></NavBar>}
+          {accessToken && (
+            <>
+              <NavBar handleLogout={handleLogout} />
+              {/* Pass logout function as a prop */}
+              <Routes>
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/" element={<Home />} />
+              </Routes>
+            </>
+          )}
           {!accessToken && showLogin && <Login setShowLogin={setShowLogin} />}
           {!accessToken && !showLogin && (
             <Register setShowLogin={setShowLogin} />

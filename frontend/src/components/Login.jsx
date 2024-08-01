@@ -11,6 +11,7 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(UserContext);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -31,7 +32,8 @@ const Login = (props) => {
 
   useEffect(() => {
     if (data) {
-      // window.localStorage.setItem()
+      window.localStorage.setItem("access", data.access);
+      window.localStorage.setItem("refresh", data.refresh);
       userCtx.setAccessToken(data.access);
       const decoded = jwtDecode(data.access);
       userCtx.setType(decoded.type);
