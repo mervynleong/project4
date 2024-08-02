@@ -79,11 +79,6 @@ const Register = (props) => {
       isValid = false;
     }
 
-    if (type !== "BUYER" || type !== "SELLER" || type !== "ADMIN") {
-      newErrors.type = "Type is required!";
-      isValid = false;
-    }
-
     if (isValid) {
       mutate();
     } else {

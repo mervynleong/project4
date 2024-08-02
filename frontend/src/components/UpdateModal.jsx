@@ -77,9 +77,6 @@ const OverLay = (props) => {
     if (!status) {
       newErrors.status = "Status must be AVAILABLE or SOLD!";
       isValid = false;
-    } else if (status !== "AVAILABLE" || status !== "SOLD") {
-      newErrors.status = "Status must be AVAILBLE or SOLD!";
-      isValid = false;
     }
 
     if (isValid) {
